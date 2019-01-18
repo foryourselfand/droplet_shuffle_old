@@ -29,6 +29,11 @@ public class PlayManager : MonoBehaviour
                 break;
             }
         }
+
+        foreach (var glass in _glasses)
+        {
+            glass.GetComponent<PositionChanger>().SetTarget(new Vector2(glass.transform.position.x, 1));
+        }
     }
 
     private void SaveInArray(GameObject parent, ref GameObject[] objectsArray)

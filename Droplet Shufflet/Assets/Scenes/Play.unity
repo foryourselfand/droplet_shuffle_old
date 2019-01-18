@@ -199,6 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 697135372}
   - component: {fileID: 697135373}
+  - component: {fileID: 697135374}
   m_Layer: 0
   m_Name: Glass (2)
   m_TagString: Untagged
@@ -265,6 +266,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &697135374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 697135371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bc075f0016472d8d803f273d6e53da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &747196008
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 905401973}
   - component: {fileID: 905401974}
+  - component: {fileID: 905401975}
   m_Layer: 0
   m_Name: Glass (1)
   m_TagString: Untagged
@@ -370,6 +384,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &905401975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 905401972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bc075f0016472d8d803f273d6e53da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &963968315
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,6 +657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1692059985}
   - component: {fileID: 1692059984}
+  - component: {fileID: 1692059986}
   m_Layer: 0
   m_Name: Glass
   m_TagString: Untagged
@@ -697,6 +724,18 @@ Transform:
   m_Father: {fileID: 2126105057}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1692059986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1692059983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bc075f0016472d8d803f273d6e53da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &1746254419
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,6 +820,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1941617927}
   - component: {fileID: 1941617928}
+  - component: {fileID: 1941617929}
   m_Layer: 0
   m_Name: Glass (3)
   m_TagString: Untagged
@@ -847,6 +887,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1941617929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1941617926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bc075f0016472d8d803f273d6e53da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &2052681242
 GameObject:
   m_ObjectHideFlags: 0

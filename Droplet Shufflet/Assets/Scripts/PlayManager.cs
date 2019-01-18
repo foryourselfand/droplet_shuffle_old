@@ -3,31 +3,42 @@
 public class PlayManager : MonoBehaviour
 {
     public GameObject GlassParent;
-    public GameObject BlueBoy, YellowBoy;
+    public GameObject BoysParent;
 
     private GameObject[] _glasses;
+    private GameObject[] _boys;
 
 
     private void Awake()
     {
-        var childCount = GlassParent.transform.childCount;
-        _glasses = new GameObject[childCount];
-
-        for (var i = 0; i < childCount; i++)
-        {
-            _glasses[i] = GlassParent.transform.GetChild(i).gameObject;
-        }
+        SaveInArray(GlassParent, ref _glasses);
+        SaveInArray(BoysParent, ref _boys);
     }
 
     private void Start()
     {
-        var tempNumber = Random.Range(0, 2);
-        BlueBoy.transform.parent = _glasses[tempNumber].transform;
-        BlueBoy.transform.localPosition = Vector3.zero;
+        foreach (var boy in _boys)
+        {
+            while (true)
+            {
+                var tempNumber = Random.Range(0, _glasses.Length);
 
+                if (_glasses[tempNumber].transform.childCount != 0) continue;
+                boy.transform.parent = _glasses[tempNumber].transform;
+                boy.transform.localPosition = Vector3.zero;
+                break;
+            }
+        }
+    }
 
-        tempNumber = Random.Range(0, 2);
-        YellowBoy.transform.parent = _glasses[2 + tempNumber].transform;
-        YellowBoy.transform.localPosition = Vector3.zero;
+    private void SaveInArray(GameObject parent, ref GameObject[] objectsArray)
+    {
+        var childCount = parent.transform.childCount;
+        objectsArray = new GameObject[childCount];
+
+        for (var i = 0; i < childCount; i++)
+        {
+            objectsArray[i] = parent.transform.GetChild(i).gameObject;
+        }
     }
 }

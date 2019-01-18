@@ -24,8 +24,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dc2b14d-4f75-4735-9dd0-ba1fa787dca8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Play.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Play.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayManager.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +51,16 @@
           <entry key="C#" value="1" />
         </counts>
       </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="cs" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="C#" value="1" />
+        </counts>
+      </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
@@ -58,11 +68,9 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayManager.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+            <state>
               <folding>
-                <marker date="1547816115965" expanded="true" signature="6:78" ph="..." />
-                <marker date="1547816115965" expanded="true" signature="120:124" ph="{...}" />
+                <marker date="1547816340090" expanded="true" signature="60:69" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -166,12 +174,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1547815961204</updated>
-      <workItem from="1547815964478" duration="157000" />
+      <workItem from="1547815964478" duration="364000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157000" />
+    <option name="totallyTimeSpent" value="364000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -232,11 +240,9 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayManager.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+        <state>
           <folding>
-            <marker date="1547816115965" expanded="true" signature="6:78" ph="..." />
-            <marker date="1547816115965" expanded="true" signature="120:124" ph="{...}" />
+            <marker date="1547816340090" expanded="true" signature="60:69" ph="{...}" />
           </folding>
         </state>
       </provider>

@@ -1,39 +1,37 @@
-using System;
-using System.Net.NetworkInformation;
 using UnityEngine;
 
-public class PositionChanger : MonoBehaviour
+public class PositionChanger : Changer
 {
-    public float Speed;
+    private Transform _transform;
+    private Vector3 _target;
 
-    private Transform _transformLink;
-    private Vector3 _targetVector;
-
-    private bool _changing;
-
-    private void Awake()
+    protected override void DefineChangingComponent()
     {
-        _transformLink = GetComponent<Transform>();
+        _transform = GetComponent<Transform>();
     }
 
-    private void Update()
+    #region Changer
+
+    protected override bool CheckForCondition()
     {
-        if (!_changing) return;
-        if (Vector3.SqrMagnitude(_transformLink.position - _targetVector) > Vector3.kEpsilonNormalSqrt)
-        {
-            _transformLink.position =
-                Vector3.MoveTowards(_transformLink.position, _targetVector, Time.deltaTime * Speed);
-        }
-        else
-        {
-            _transformLink.position = _targetVector;
-            _changing = false;
-        }
+        return Vector3.SqrMagnitude(_transform.position - _target) > Vector3.kEpsilon;
     }
+
+    protected override void Change(float t)
+    {
+        _transform.position = Vector3.Lerp(_transform.position, _target, t * Speed);
+    }
+
+    protected override void ActionOnEnd()
+    {
+        _transform.position = _target;
+    }
+
+    #endregion
 
     public void SetTarget(Vector2 targetVector)
     {
-        _changing = true;
-        _targetVector = targetVector;
+        StartChanging();
+        _target = targetVector;
     }
 }

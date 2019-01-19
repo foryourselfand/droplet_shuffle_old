@@ -1,23 +1,34 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayManager : MonoBehaviour
 {
+    public float TimeToMemento;
+
+    #region Parents
+
     public GameObject ShadowsParent;
     public GameObject GlassesParent;
     public GameObject BoysParent;
     public GameObject FingersParent;
+
+    #endregion
+
+    #region Arrays
 
     private GameObject[] _shadows;
     private GameObject[] _glasses;
     private GameObject[] _boys;
     private GameObject[] _fingers;
 
+    #endregion
+
     private void Awake()
     {
-        SaveInArray(ShadowsParent, ref _shadows);
-        SaveInArray(GlassesParent, ref _glasses);
-        SaveInArray(BoysParent, ref _boys);
-        SaveInArray(FingersParent, ref _fingers);
+        SaveInArrayFromParent(ShadowsParent, ref _shadows);
+        SaveInArrayFromParent(GlassesParent, ref _glasses);
+        SaveInArrayFromParent(BoysParent, ref _boys);
+        SaveInArrayFromParent(FingersParent, ref _fingers);
     }
 
     private void Start()
@@ -28,9 +39,7 @@ public class PlayManager : MonoBehaviour
     private void ActionWhenStart()
     {
         for (var i = 0; i < _glasses.Length; i++)
-        {
             SetParentToShadowAndSetY(_glasses[i], i, 0.3F);
-        }
 
         for (var i = 0; i < _boys.Length; i++)
         {
@@ -49,14 +58,22 @@ public class PlayManager : MonoBehaviour
 
         ChangeScaleOnFingers();
 
-        foreach (var glass in _glasses)
-        {
-            Debug.Log(glass.name);
-            glass.GetComponent<PositionChanger>().SetTarget(new Vector2(glass.transform.position.x, 0.5F));
-        }
+        StartCoroutine(TestFunc());
     }
 
-    private void SaveInArray(GameObject parent, ref GameObject[] objectsArray)
+    private IEnumerator TestFunc()
+    {
+        foreach (var glass in _glasses)
+            glass.GetComponent<PositionChanger>().SetTarget(new Vector2(glass.transform.position.x, 0.5F));
+
+        yield return new WaitUntil(() => _glasses[0].GetComponent<Changer>().IsDone());
+        yield return new WaitForSeconds(TimeToMemento);
+
+        foreach (var glass in _glasses)
+            glass.GetComponent<PositionChanger>().SetTarget(new Vector2(glass.transform.position.x, -0.5F));
+    }
+
+    private void SaveInArrayFromParent(GameObject parent, ref GameObject[] objectsArray)
     {
         var childCount = parent.transform.childCount;
         objectsArray = new GameObject[childCount];
@@ -75,7 +92,7 @@ public class PlayManager : MonoBehaviour
 
     private void ChangeScaleOnFingers()
     {
-        var temp = _fingers[0].transform.position.x < _fingers[1].transform.position.x ? -1 : 1;
+        var temp = _fingers[0].transform.position.x < _fingers[1].transform.position.x ? 1 : -1;
         _fingers[0].transform.localScale = new Vector3(1 * temp, 1, 1);
         _fingers[1].transform.localScale = new Vector3(-1 * temp, 1, 1);
     }

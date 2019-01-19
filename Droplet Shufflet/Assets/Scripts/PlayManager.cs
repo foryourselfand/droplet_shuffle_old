@@ -2,17 +2,20 @@
 
 public class PlayManager : MonoBehaviour
 {
-    public GameObject ShadowParent;
+    public GameObject ShadowsParent;
+    public GameObject GlassesParent;
     public GameObject BoysParent;
     public GameObject FingersParent;
 
     private GameObject[] _shadows;
+    private GameObject[] _glasses;
     private GameObject[] _boys;
     private GameObject[] _fingers;
 
     private void Awake()
     {
-        SaveInArray(ShadowParent, ref _shadows);
+        SaveInArray(ShadowsParent, ref _shadows);
+        SaveInArray(GlassesParent, ref _glasses);
         SaveInArray(BoysParent, ref _boys);
         SaveInArray(FingersParent, ref _fingers);
     }
@@ -24,6 +27,11 @@ public class PlayManager : MonoBehaviour
 
     private void ActionWhenStart()
     {
+        for (var i = 0; i < _glasses.Length; i++)
+        {
+            SetParentToShadowAndSetY(_glasses[i], i, 0.3F);
+        }
+
         for (var i = 0; i < _boys.Length; i++)
         {
             while (true)
@@ -41,9 +49,10 @@ public class PlayManager : MonoBehaviour
 
         ChangeScaleOnFingers();
 
-        foreach (var shadow in _shadows)
+        foreach (var glass in _glasses)
         {
-            shadow.GetComponent<PositionChanger>().SetTarget(new Vector2(shadow.transform.localPosition.x, 0.5F));
+            Debug.Log(glass.name);
+            glass.GetComponent<PositionChanger>().SetTarget(new Vector2(glass.transform.position.x, 0.5F));
         }
     }
 

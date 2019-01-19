@@ -2,16 +2,15 @@
 
 public class PlayManager : MonoBehaviour
 {
-    public GameObject GlassParent;
+    public GameObject ShadowParent;
     public GameObject BoysParent;
 
-    private GameObject[] _glasses;
+    private GameObject[] _shadows;
     private GameObject[] _boys;
-
 
     private void Awake()
     {
-        SaveInArray(GlassParent, ref _glasses);
+        SaveInArray(ShadowParent, ref _shadows);
         SaveInArray(BoysParent, ref _boys);
     }
 
@@ -21,16 +20,17 @@ public class PlayManager : MonoBehaviour
         {
             while (true)
             {
-                var tempNumber = Random.Range(0, _glasses.Length);
+                var tempNumber = Random.Range(0, _shadows.Length);
 
-                if (_glasses[tempNumber].transform.childCount != 0) continue;
-                boy.transform.parent = _glasses[tempNumber].transform;
-                boy.transform.localPosition = Vector3.zero;
+                if (_shadows[tempNumber].transform.childCount != 1) continue;
+                boy.transform.parent = _shadows[tempNumber].transform;
+                boy.transform.localPosition = new Vector2(0, 0.12F);
                 break;
             }
         }
 
-        foreach (var glass in _glasses)
+
+        foreach (var glass in _shadows)
         {
             glass.GetComponent<PositionChanger>().SetTarget(new Vector2(glass.transform.position.x, 1));
         }

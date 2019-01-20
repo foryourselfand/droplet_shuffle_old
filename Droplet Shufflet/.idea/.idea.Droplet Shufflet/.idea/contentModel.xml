@@ -12,7 +12,8 @@
             </e>
             <e p="Position" t="Include">
               <e p="Behaviors" t="Include">
-                <e p="PositionBehavior.cs" t="Include" />
+                <e p="_PositionBehavior.cs" t="Include" />
+                <e p="DefaultSmooth.cs" t="Include" />
                 <e p="SpecialSmoothBehavior.cs" t="Include" />
               </e>
               <e p="PositionChanger.cs" t="Include" />

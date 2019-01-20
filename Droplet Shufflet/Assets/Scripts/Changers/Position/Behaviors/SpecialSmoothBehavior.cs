@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpecialSmoothBehavior : PositionBehavior
+public class SpecialSmoothBehavior : _PositionBehavior
 {
     private bool _fromSlowToFast;
 

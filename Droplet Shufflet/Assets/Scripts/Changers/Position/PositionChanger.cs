@@ -1,16 +1,16 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PositionBehavior))]
+[RequireComponent(typeof(_PositionBehavior))]
 public class PositionChanger : Changer
 {
     private Transform _transform;
-    private PositionBehavior _behavior;
+    private _PositionBehavior _behavior;
     private Vector3 _target;
 
     protected override void DefineChangingComponent()
     {
         _transform = GetComponent<Transform>();
-        _behavior = GetComponent<PositionBehavior>();
+        _behavior = GetComponent<_PositionBehavior>();
     }
 
     #region Changer

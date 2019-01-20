@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 
 public class PlayManager : MonoBehaviour
@@ -105,7 +106,12 @@ public class PlayManager : MonoBehaviour
 
         ChangeScaleOnFingers();
 
-        yield return new WaitUntil(() => _fingers[0].GetComponent<OpacityChanger>().IsDone());
+        yield return new WaitUntil(() => _shadows[tempNumber].GetComponent<PositionChanger>().IsDone());
+        
+//        yield return new WaitForSeconds(1.5F);
+        
+        _shadows[tempNumber].GetComponent<PositionChanger>().SetTarget(new Vector2(0.5F, multiply * 0.5F));
+        _shadows[tempNumber + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, -multiply * 0.5F));
     }
 
     private void SaveInArrayFromParent(GameObject parent, ref GameObject[] objectsArray)

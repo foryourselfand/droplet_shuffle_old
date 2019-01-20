@@ -67,7 +67,6 @@ public class PlayManager : MonoBehaviour
         yield return MoveGlassByAndWaitForDone(0.5F);
 
         yield return new WaitForSeconds(TimeToMemento);
-        Debug.Log("After Memento");
 
         yield return MoveGlassByAndWaitForDone(-0.5F);
 
@@ -84,13 +83,9 @@ public class PlayManager : MonoBehaviour
             if (tempNumber == lastShadow) continue;
 
             lastShadow = tempNumber;
-//            Debug.Log(string.Format("{0} {1}", _shadows[tempNumber].name, _shadows[tempNumber + 1].name));
 
             for (var i = 0; i < _fingers.Length; i++)
-            {
                 SetParentToShadowAndSetY(_fingers[i], tempNumber + i, 0.82F);
-                Debug.Log(_shadows[tempNumber + i].name);
-            }
 
             break;
         }
@@ -101,8 +96,11 @@ public class PlayManager : MonoBehaviour
             finger.GetComponent<OpacityChanger>().SetCurrentAndTarget(0, 1);
         }
 
-        _shadows[tempNumber].GetComponent<PositionChanger>().SetTarget(new Vector2(0.5F, -0.5F));
-        _shadows[tempNumber + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, 0.5F));
+        var multiply = Random.Range(0, 2) == 0 ? 1 : -1;
+        _glasses[tempNumber].GetComponent<SpriteRenderer>().sortingOrder = 4 + multiply;
+        _glasses[tempNumber + 1].GetComponent<SpriteRenderer>().sortingOrder = 4 - multiply;
+        _shadows[tempNumber].GetComponent<PositionChanger>().SetTarget(new Vector2(0.5F, -multiply * 0.5F));
+        _shadows[tempNumber + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, multiply * 0.5F));
 
         ChangeScaleOnFingers();
 

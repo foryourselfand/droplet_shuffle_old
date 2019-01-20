@@ -14,24 +14,24 @@ public class PositionChanger : Changer
 
     protected override bool CheckForCondition()
     {
-        return Vector3.SqrMagnitude(_transform.position - _target) > Vector3.kEpsilon;
+        return Vector3.SqrMagnitude(_transform.localPosition - _target) > Vector3.kEpsilon;
     }
 
     protected override void Change(float t)
     {
-        _transform.position = Vector3.Lerp(_transform.position, _target, t * Speed);
+        _transform.localPosition = Vector3.Lerp(_transform.localPosition, _target, t * Speed);
     }
 
     protected override void ActionOnEnd()
     {
-        _transform.position = _target;
+        _transform.localPosition = _target;
     }
 
     #endregion
 
-    public void SetTarget(Vector2 targetVector)
+    public void SetTarget(Vector3 target)
     {
         StartChanging();
-        _target = targetVector;
+        _target = _transform.localPosition + target;
     }
 }

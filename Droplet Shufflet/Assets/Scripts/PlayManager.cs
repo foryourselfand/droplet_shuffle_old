@@ -96,6 +96,7 @@ public class PlayManager : MonoBehaviour
             finger.GetComponent<OpacityChanger>().SetCurrentAndTarget(0, 1);
         }
 
+        
         var multiply = Random.Range(0, 2) == 0 ? 1 : -1;
         _glasses[tempNumber].GetComponent<SpriteRenderer>().sortingOrder = 4 + multiply;
         _glasses[tempNumber + 1].GetComponent<SpriteRenderer>().sortingOrder = 4 - multiply;

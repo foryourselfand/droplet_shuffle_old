@@ -7,8 +7,16 @@
         <e p="Scripts" t="Include">
           <e p="Changers" t="Include">
             <e p="_Changer.cs" t="Include" />
-            <e p="OpacityChanger.cs" t="Include" />
-            <e p="PositionChanger.cs" t="Include" />
+            <e p="Opacity" t="Include">
+              <e p="OpacityChanger.cs" t="Include" />
+            </e>
+            <e p="Position" t="Include">
+              <e p="Behaviors" t="Include">
+                <e p="PositionBehavior.cs" t="Include" />
+                <e p="SpecialSmoothBehavior.cs" t="Include" />
+              </e>
+              <e p="PositionChanger.cs" t="Include" />
+            </e>
           </e>
           <e p="PlayManager.cs" t="Include" />
         </e>

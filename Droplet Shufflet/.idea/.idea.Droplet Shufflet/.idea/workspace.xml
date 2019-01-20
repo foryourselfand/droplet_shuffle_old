@@ -23,12 +23,7 @@
     <option name="FILTER_BY_CURRENT_PROJECT" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dc2b14d-4f75-4735-9dd0-ba1fa787dca8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Changers/Position/Behaviors/DefaultSmooth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Changers/Position/Behaviors/DefaultSmooth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Changers/Position/Behaviors/SpecialSmoothBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Changers/Position/Behaviors/SpecialSmoothBehavior.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Play.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Play.unity" afterDir="false" />
-    </list>
+    <list default="true" id="8dc2b14d-4f75-4735-9dd0-ba1fa787dca8" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +34,7 @@
     <session id="99909980">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.3" value="1" />
@@ -142,8 +137,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Changers/Position/Behaviors/SpecialSmoothBehavior.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+            <state relative-caret-position="450">
+              <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
               <folding>
                 <marker date="1548012145902" expanded="true" signature="74:556" ph="{...}" />
                 <marker date="1548012145902" expanded="true" signature="250:433" ph="{...}" />
@@ -329,12 +324,12 @@
       <workItem from="1547815964478" duration="4107000" />
       <workItem from="1547922573682" duration="9048000" />
       <workItem from="1547967446113" duration="5027000" />
-      <workItem from="1548008173849" duration="3620000" />
+      <workItem from="1548008173849" duration="3748000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21802000" />
+    <option name="totallyTimeSpent" value="21930000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -548,8 +543,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Changers/Position/Behaviors/SpecialSmoothBehavior.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+        <state relative-caret-position="450">
+          <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
           <folding>
             <marker date="1548012145902" expanded="true" signature="74:556" ph="{...}" />
             <marker date="1548012145902" expanded="true" signature="250:433" ph="{...}" />

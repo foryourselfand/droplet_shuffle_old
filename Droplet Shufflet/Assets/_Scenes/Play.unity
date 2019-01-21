@@ -211,7 +211,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300002, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.96470594, g: 0.96470594, b: 0.96470594, a: 1}
+  m_Color: {r: 0.96470594, g: 0.96470594, b: 0.96470594, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 2
+  Speed: 4
 --- !u!1 &287456911
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc74331770854086817cca34066b48fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.2
+  smoothTime: 0.1
 --- !u!1 &388978678
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,7 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc74331770854086817cca34066b48fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.2
+  smoothTime: 0.1
 --- !u!1 &697135371
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,6 +662,8 @@ GameObject:
   - component: {fileID: 697135373}
   - component: {fileID: 697135375}
   - component: {fileID: 697135374}
+  - component: {fileID: 697135376}
+  - component: {fileID: 697135377}
   m_Layer: 0
   m_Name: Glass (2)
   m_TagString: Untagged
@@ -750,7 +752,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bc075f0016472d8d803f273d6e53da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 4
+--- !u!61 &697135376
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 697135371}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.76}
+    newSize: {x: 0.64, y: 0.76}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.76}
+  m_EdgeRadius: 0
+--- !u!114 &697135377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 697135371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968f252be5594e9f933699b63a1d2e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playManager: {fileID: 1578150718}
 --- !u!1 &822378584
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,6 +876,8 @@ GameObject:
   - component: {fileID: 905401974}
   - component: {fileID: 905401976}
   - component: {fileID: 905401975}
+  - component: {fileID: 905401977}
+  - component: {fileID: 905401978}
   m_Layer: 0
   m_Name: Glass (1)
   m_TagString: Untagged
@@ -925,7 +966,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bc075f0016472d8d803f273d6e53da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 4
+--- !u!61 &905401977
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 905401972}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.76}
+    newSize: {x: 0.64, y: 0.76}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.76}
+  m_EdgeRadius: 0
+--- !u!114 &905401978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 905401972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968f252be5594e9f933699b63a1d2e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playManager: {fileID: 1578150718}
 --- !u!1 &963968315
 GameObject:
   m_ObjectHideFlags: 0
@@ -1386,7 +1464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc74331770854086817cca34066b48fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.2
+  smoothTime: 0.1
 --- !u!1 &1578150717
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,7 +1576,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300002, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.96470594, g: 0.96470594, b: 0.96470594, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1519,7 +1597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 2
+  Speed: 4
 --- !u!1 &1679856939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,6 +1641,8 @@ GameObject:
   - component: {fileID: 1692059984}
   - component: {fileID: 1692059987}
   - component: {fileID: 1692059986}
+  - component: {fileID: 1692059988}
+  - component: {fileID: 1692059989}
   m_Layer: 0
   m_Name: Glass
   m_TagString: Untagged
@@ -1651,7 +1731,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bc075f0016472d8d803f273d6e53da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 4
+--- !u!61 &1692059988
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1692059983}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.76}
+    newSize: {x: 0.64, y: 0.76}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.76}
+  m_EdgeRadius: 0
+--- !u!114 &1692059989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1692059983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968f252be5594e9f933699b63a1d2e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playManager: {fileID: 1578150718}
 --- !u!1 &1941617926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,6 +1780,8 @@ GameObject:
   - component: {fileID: 1941617928}
   - component: {fileID: 1941617930}
   - component: {fileID: 1941617929}
+  - component: {fileID: 1941617931}
+  - component: {fileID: 1941617932}
   m_Layer: 0
   m_Name: Glass (3)
   m_TagString: Untagged
@@ -1751,7 +1870,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bc075f0016472d8d803f273d6e53da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 4
+--- !u!61 &1941617931
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1941617926}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.76}
+    newSize: {x: 0.64, y: 0.76}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.76}
+  m_EdgeRadius: 0
+--- !u!114 &1941617932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1941617926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968f252be5594e9f933699b63a1d2e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playManager: {fileID: 1578150718}
 --- !u!1 &1991218563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,7 +2158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc74331770854086817cca34066b48fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.2
+  smoothTime: 0.1
 --- !u!1 &2140900140
 GameObject:
   m_ObjectHideFlags: 0

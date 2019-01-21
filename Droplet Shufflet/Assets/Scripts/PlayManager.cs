@@ -5,7 +5,6 @@ public class PlayManager : MonoBehaviour
 {
     public float TimeToMemento;
 
-
     #region Parents
 
     public GameObject ShadowsParent;
@@ -32,6 +31,8 @@ public class PlayManager : MonoBehaviour
     private bool _canClick;
     private int _clickedBoysCount;
     private int _maxBoysCount;
+    private int currentLevel = 0;
+    private int maxLevel = 1;
 
     #endregion
 
@@ -120,7 +121,14 @@ public class PlayManager : MonoBehaviour
 
         yield return OpacityFingersAndWaitForDone(0);
 
-        _canClick = true;
+        currentLevel++;
+        if (currentLevel == maxLevel)
+        {
+            _canClick = true;
+            currentLevel = 0;
+        }
+        else
+            StartCoroutine(MoveShadows());
     }
 
     private void ChangeScaleOnFingers()
@@ -130,11 +138,20 @@ public class PlayManager : MonoBehaviour
         _fingers[1].transform.localScale = new Vector3(-1 * fingerScale, 1, 1);
     }
 
+    private IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY, int length)
+    {
+        for (var i = 0; i < length; i++)
+        {
+            var glass = glasses[i];
+            glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, byY));
+        }
+
+        yield return _helper.WaitUntilChangerDone(glasses[0]);
+    }
+
     private IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY)
     {
-        foreach (var glass in glasses)
-            glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, byY));
-        yield return _helper.WaitUntilChangerDone(glasses[0]);
+        yield return MoveGlassesAndWaitForDone(glasses, byY, glasses.Length);
     }
 
     private IEnumerator MoveShadowsAndWaitForDone(int firstShadow, int multiply)
@@ -169,7 +186,7 @@ public class PlayManager : MonoBehaviour
         else
         {
             _canClick = false;
-            Debug.Log("Game Over");
+            StartCoroutine(Lose());
         }
     }
 
@@ -203,7 +220,15 @@ public class PlayManager : MonoBehaviour
         yield return MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F);
 
         _clickedBoysCount = 0;
-
+        maxLevel++;
         StartCoroutine(MoveShadows());
+    }
+
+    private IEnumerator Lose()
+    {
+        yield return _helper.WaitUntilChangerDone(_clickedGlasses[_clickedBoysCount]);
+        yield return new WaitForSeconds(TimeToMemento);
+        yield return MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, _clickedBoysCount + 1);
+        Debug.Log("Game Over");
     }
 }

@@ -57,61 +57,60 @@ public class PlayManager : MonoBehaviour
             }
         }
 
-        foreach (var finger in _fingers)
-            finger.SetActive(false);
-
         StartCoroutine(ShowWhereToMemento());
     }
 
     private IEnumerator ShowWhereToMemento()
     {
-        yield return MoveGlassByAndWaitForDone(0.5F);
+        yield return MoveGlassByAndWaitForGlassDone(0.5F);
 
         yield return new WaitForSeconds(TimeToMemento);
 
-        yield return MoveGlassByAndWaitForDone(-0.5F);
+        yield return MoveGlassByAndWaitForGlassDone(-0.5F);
 
         StartCoroutine(MoveShadows());
     }
 
     private IEnumerator MoveShadows()
     {
-        int tempNumber;
+        int firstShadow;
         while (true)
         {
-            tempNumber = Random.Range(0, _shadows.Length - 1);
+            firstShadow = Random.Range(0, _shadows.Length - 1);
 
-            if (tempNumber == lastShadow) continue;
+            if (firstShadow == lastShadow) continue;
 
-            lastShadow = tempNumber;
+            lastShadow = firstShadow;
 
             for (var i = 0; i < _fingers.Length; i++)
-                SetParentToShadowAndSetY(_fingers[i], tempNumber + i, 0.82F);
+                SetParentToShadowAndSetY(_fingers[i], firstShadow + i, 0.82F);
 
             break;
         }
 
         foreach (var finger in _fingers)
-        {
-            finger.SetActive(true);
-            finger.GetComponent<OpacityChanger>().SetCurrentAndTarget(0, 1);
-        }
-
-        
-        var multiply = Random.Range(0, 2) == 0 ? 1 : -1;
-        _glasses[tempNumber].GetComponent<SpriteRenderer>().sortingOrder = 4 + multiply;
-        _glasses[tempNumber + 1].GetComponent<SpriteRenderer>().sortingOrder = 4 - multiply;
-        _shadows[tempNumber].GetComponent<PositionChanger>().SetTarget(new Vector2(0.5F, -multiply * 0.5F));
-        _shadows[tempNumber + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, multiply * 0.5F));
-
+            finger.GetComponent<OpacityChanger>().SetTarget(1);
         ChangeScaleOnFingers();
 
-        yield return new WaitUntil(() => _shadows[tempNumber].GetComponent<PositionChanger>().IsDone());
+        var multiply = Random.Range(0, 2) == 0 ? 1 : -1;
+        _glasses[firstShadow].GetComponent<SpriteRenderer>().sortingOrder = 4 + multiply;
+        _glasses[firstShadow + 1].GetComponent<SpriteRenderer>().sortingOrder = 4 - multiply;
+
+        _shadows[firstShadow].GetComponent<PositionChanger>().SetTarget(new Vector2(0.5F, -multiply * 0.5F));
+        _shadows[firstShadow + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, multiply * 0.5F));
+
+        yield return WaitUntilChangerDone(_shadows[firstShadow]);
+
+        _shadows[firstShadow].GetComponent<PositionChanger>().SetTarget(new Vector2(0.5F, multiply * 0.5F));
+        _shadows[firstShadow + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, -multiply * 0.5F));
         
-//        yield return new WaitForSeconds(1.5F);
-        
-        _shadows[tempNumber].GetComponent<PositionChanger>().SetTarget(new Vector2(0.5F, multiply * 0.5F));
-        _shadows[tempNumber + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, -multiply * 0.5F));
+        Swap(ref _fingers[0], ref _fingers[1]);        
+        Swap(ref _shadows[firstShadow], ref _shadows[firstShadow + 1]);
+
+        yield return WaitUntilChangerDone(_shadows[firstShadow]);
+
+        foreach (var finger in _fingers)
+            finger.GetComponent<OpacityChanger>().SetTarget(0);
     }
 
     private void SaveInArrayFromParent(GameObject parent, ref GameObject[] objectsArray)
@@ -133,15 +132,27 @@ public class PlayManager : MonoBehaviour
 
     private void ChangeScaleOnFingers()
     {
-        var temp = _fingers[0].transform.position.x < _fingers[1].transform.position.x ? 1 : -1;
-        _fingers[0].transform.localScale = new Vector3(1 * temp, 1, 1);
-        _fingers[1].transform.localScale = new Vector3(-1 * temp, 1, 1);
+        var fingerScale = _fingers[0].transform.position.x < _fingers[1].transform.position.x ? 1 : -1;
+        _fingers[0].transform.localScale = new Vector3(1 * fingerScale, 1, 1);
+        _fingers[1].transform.localScale = new Vector3(-1 * fingerScale, 1, 1);
     }
 
-    private IEnumerator MoveGlassByAndWaitForDone(float byY)
+    private IEnumerator MoveGlassByAndWaitForGlassDone(float byY)
     {
         foreach (var glass in _glasses)
             glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, byY));
-        yield return new WaitUntil(() => _glasses[0].GetComponent<PositionChanger>().IsDone());
+        yield return WaitUntilChangerDone(_glasses[0]);
+    }
+
+    private IEnumerator WaitUntilChangerDone(GameObject objectToWait)
+    {
+        yield return new WaitUntil(() => objectToWait.GetComponent<Changer>().IsDone());
+    }
+
+    private void Swap(ref GameObject first, ref GameObject second)
+    {
+        var temp = first;
+        first = second;
+        second = temp;
     }
 }

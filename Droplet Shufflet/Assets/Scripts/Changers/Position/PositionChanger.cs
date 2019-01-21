@@ -28,7 +28,7 @@ public class PositionChanger : Changer
     protected override void ActionOnEnd()
     {
         _transform.localPosition = _target;
-        _behavior.SpecialAction();
+        _behavior.BehaviorActionOnEnd();
     }
 
     #endregion

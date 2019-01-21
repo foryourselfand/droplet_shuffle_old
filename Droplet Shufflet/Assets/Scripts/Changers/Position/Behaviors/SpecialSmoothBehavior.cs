@@ -16,7 +16,7 @@ public class SpecialSmoothBehavior : _PositionBehavior
         return Vector2.Lerp(current, target, _lerpTime);
     }
 
-    public override void SpecialAction()
+    public override void BehaviorActionOnEnd()
     {
         _lerpTime = 0;
         _fromSlowToFast = !_fromSlowToFast;

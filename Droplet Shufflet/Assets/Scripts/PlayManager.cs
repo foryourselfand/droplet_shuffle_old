@@ -76,11 +76,11 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator ShowWhereToMemento()
     {
-        yield return MoveGlassesAndWaitForDone(0.5F);
+        yield return MoveGlassesAndWaitForDone(_glasses, 0.5F);
 
         yield return new WaitForSeconds(TimeToMemento);
 
-        yield return MoveGlassesAndWaitForDone(-0.5F);
+        yield return MoveGlassesAndWaitForDone(_glasses, -0.5F);
 
         StartCoroutine(MoveShadows());
     }
@@ -115,7 +115,7 @@ public class PlayManager : MonoBehaviour
 
         yield return MoveShadowsAndWaitForDone(firstShadow, -multiply);
 
-        _helper.Swap(ref _fingers[0], ref _fingers[1]);
+//        _helper.Swap(ref _fingers[0], ref _fingers[1]);
         _helper.Swap(ref _shadows[firstShadow], ref _shadows[firstShadow + 1]);
 
         yield return OpacityFingersAndWaitForDone(0);
@@ -130,11 +130,11 @@ public class PlayManager : MonoBehaviour
         _fingers[1].transform.localScale = new Vector3(-1 * fingerScale, 1, 1);
     }
 
-    private IEnumerator MoveGlassesAndWaitForDone(float byY)
+    private IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY)
     {
-        foreach (var glass in _glasses)
+        foreach (var glass in glasses)
             glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, byY));
-        yield return _helper.WaitUntilChangerDone(_glasses[0]);
+        yield return _helper.WaitUntilChangerDone(glasses[0]);
     }
 
     private IEnumerator MoveShadowsAndWaitForDone(int firstShadow, int multiply)
@@ -185,12 +185,10 @@ public class PlayManager : MonoBehaviour
     private IEnumerator Win()
     {
         foreach (var glass in _clickedGlasses)
-        {
             yield return _helper.WaitUntilChangerDone(glass);
-        }
 
         var directory = 0.1F;
-        for (var i = 0; i < _maxBoysCount; i++)
+        for (var i = 0; i < _maxBoysCount * 2; i++)
         {
             foreach (var boy in _boys)
             {
@@ -199,7 +197,13 @@ public class PlayManager : MonoBehaviour
 
             directory *= -1;
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5F);
         }
+
+        yield return MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F);
+
+        _clickedBoysCount = 0;
+
+        StartCoroutine(MoveShadows());
     }
 }

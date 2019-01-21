@@ -5,6 +5,8 @@ public class PlayManager : MonoBehaviour
 {
     public float TimeToMemento;
 
+    private Helper _helper;
+
     #region Parents
 
     public GameObject ShadowsParent;
@@ -27,10 +29,12 @@ public class PlayManager : MonoBehaviour
 
     private void Awake()
     {
-        SaveInArrayFromParent(ShadowsParent, ref _shadows);
-        SaveInArrayFromParent(GlassesParent, ref _glasses);
-        SaveInArrayFromParent(BoysParent, ref _boys);
-        SaveInArrayFromParent(FingersParent, ref _fingers);
+        _helper = new Helper();
+
+        _helper.SaveInArrayFromParent(ShadowsParent, ref _shadows);
+        _helper.SaveInArrayFromParent(GlassesParent, ref _glasses);
+        _helper.SaveInArrayFromParent(BoysParent, ref _boys);
+        _helper.SaveInArrayFromParent(FingersParent, ref _fingers);
     }
 
     private void Start()
@@ -103,19 +107,8 @@ public class PlayManager : MonoBehaviour
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetTarget(0);
 
-        Swap(ref _fingers[0], ref _fingers[1]);
-        Swap(ref _shadows[firstShadow], ref _shadows[firstShadow + 1]);
-    }
-
-    private void SaveInArrayFromParent(GameObject parent, ref GameObject[] objectsArray)
-    {
-        var childCount = parent.transform.childCount;
-        objectsArray = new GameObject[childCount];
-
-        for (var i = 0; i < childCount; i++)
-        {
-            objectsArray[i] = parent.transform.GetChild(i).gameObject;
-        }
+        _helper.Swap(ref _fingers[0], ref _fingers[1]);
+        _helper.Swap(ref _shadows[firstShadow], ref _shadows[firstShadow + 1]);
     }
 
     private void SetParentToShadowAndSetY(GameObject objectToChange, int shadowNumber, float yToChange)
@@ -135,7 +128,7 @@ public class PlayManager : MonoBehaviour
     {
         foreach (var glass in _glasses)
             glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, byY));
-        yield return WaitUntilChangerDone(_glasses[0]);
+        yield return _helper.WaitUntilChangerDone(_glasses[0]);
     }
 
     private IEnumerator MoveShadowAndWaitForDone(int firstShadow, int multiply)
@@ -143,18 +136,6 @@ public class PlayManager : MonoBehaviour
         _shadows[firstShadow].GetComponent<PositionChanger>().SetTarget(new Vector2(0.5F, multiply * 0.5F));
         _shadows[firstShadow + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, -multiply * 0.5F));
 
-        yield return WaitUntilChangerDone(_shadows[firstShadow]);
-    }
-
-    private IEnumerator WaitUntilChangerDone(GameObject objectToWait)
-    {
-        yield return new WaitUntil(() => objectToWait.GetComponent<Changer>().IsDone());
-    }
-
-    private void Swap(ref GameObject first, ref GameObject second)
-    {
-        var temp = first;
-        first = second;
-        second = temp;
+        yield return _helper.WaitUntilChangerDone(_shadows[firstShadow]);
     }
 }

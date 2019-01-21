@@ -7,7 +7,7 @@
         <e p="Scripts" t="Include">
           <e p="Changers" t="Include">
             <e p="_Changer.cs" t="Include" />
-            <e p="GlassClicker.cs" t="Include" />
+            <e p="Helper.cs" t="Include" />
             <e p="Opacity" t="Include">
               <e p="OpacityChanger.cs" t="Include" />
             </e>
@@ -20,6 +20,7 @@
               <e p="PositionChanger.cs" t="Include" />
             </e>
           </e>
+          <e p="GlassClicker.cs" t="Include" />
           <e p="PlayManager.cs" t="Include" />
         </e>
       </e>

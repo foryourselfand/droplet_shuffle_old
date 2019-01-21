@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 4
+  Speed: 6
 --- !u!1 &287456911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +1015,7 @@ GameObject:
   - component: {fileID: 963968317}
   m_Layer: 0
   m_Name: Yellow Boy
-  m_TagString: Untagged
+  m_TagString: Boy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1597,7 +1597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 4
+  Speed: 6
 --- !u!1 &1679856939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,7 +1994,7 @@ GameObject:
   - component: {fileID: 2052681244}
   m_Layer: 0
   m_Name: Blue Boy
-  m_TagString: Untagged
+  m_TagString: Boy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -5,7 +5,6 @@ public class PlayManager : MonoBehaviour
 {
     public float TimeToMemento;
 
-    private Helper _helper;
 
     #region Parents
 
@@ -25,7 +24,13 @@ public class PlayManager : MonoBehaviour
 
     #endregion
 
+    #region Other
+
+    private Helper _helper;
     private int _lastShadow = -1;
+    private bool _canClick;
+
+    #endregion
 
     private void Awake()
     {
@@ -47,14 +52,14 @@ public class PlayManager : MonoBehaviour
         for (var i = 0; i < _glasses.Length; i++)
             _helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
 
-        for (var i = 0; i < _boys.Length; i++)
+        foreach (var boy in _boys)
         {
             while (true)
             {
                 var tempNumber = Random.Range(0, _shadows.Length);
 
                 if (_shadows[tempNumber].transform.childCount != 1) continue;
-                _helper.SetParentAndY(_boys[i], _shadows[tempNumber], 0.12F);
+                _helper.SetParentAndY(boy, _shadows[tempNumber], 0.12F);
 
                 break;
             }
@@ -65,11 +70,11 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator ShowWhereToMemento()
     {
-        yield return MoveGlassAndWaitForDone(0.5F);
+        yield return MoveGlassesAndWaitForDone(0.5F);
 
         yield return new WaitForSeconds(TimeToMemento);
 
-        yield return MoveGlassAndWaitForDone(-0.5F);
+        yield return MoveGlassesAndWaitForDone(-0.5F);
 
         StartCoroutine(MoveShadows());
     }
@@ -100,14 +105,16 @@ public class PlayManager : MonoBehaviour
         _glasses[firstShadow].GetComponent<SpriteRenderer>().sortingOrder = 4 - multiply;
         _glasses[firstShadow + 1].GetComponent<SpriteRenderer>().sortingOrder = 4 + multiply;
 
-        yield return MoveShadowAndWaitForDone(firstShadow, multiply);
+        yield return MoveShadowsAndWaitForDone(firstShadow, multiply);
 
-        yield return MoveShadowAndWaitForDone(firstShadow, -multiply);
+        yield return MoveShadowsAndWaitForDone(firstShadow, -multiply);
 
         _helper.Swap(ref _fingers[0], ref _fingers[1]);
         _helper.Swap(ref _shadows[firstShadow], ref _shadows[firstShadow + 1]);
 
         yield return OpacityFingersAndWaitForDone(0);
+
+        _canClick = true;
     }
 
     private void ChangeScaleOnFingers()
@@ -117,14 +124,14 @@ public class PlayManager : MonoBehaviour
         _fingers[1].transform.localScale = new Vector3(-1 * fingerScale, 1, 1);
     }
 
-    private IEnumerator MoveGlassAndWaitForDone(float byY)
+    private IEnumerator MoveGlassesAndWaitForDone(float byY)
     {
         foreach (var glass in _glasses)
             glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, byY));
         yield return _helper.WaitUntilChangerDone(_glasses[0]);
     }
 
-    private IEnumerator MoveShadowAndWaitForDone(int firstShadow, int multiply)
+    private IEnumerator MoveShadowsAndWaitForDone(int firstShadow, int multiply)
     {
         _shadows[firstShadow].GetComponent<PositionChanger>().SetTarget(new Vector2(0.5F, multiply * 0.5F));
         _shadows[firstShadow + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, -multiply * 0.5F));
@@ -137,5 +144,24 @@ public class PlayManager : MonoBehaviour
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetTarget(target);
         yield return _helper.WaitUntilChangerDone(_fingers[0]);
+    }
+
+    public void ActionOnClick(GameObject glass)
+    {
+        if (!_canClick) return;
+        glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, 0.5F));
+        if (BoyIn(glass))
+        {
+            Debug.Log("True");
+        }
+    }
+
+    private bool BoyIn(GameObject glass)
+    {
+        foreach (Transform child in glass.transform.parent)
+            if (child.CompareTag("Boy"))
+                return true;
+
+        return false;
     }
 }

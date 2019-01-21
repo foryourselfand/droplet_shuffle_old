@@ -6,6 +6,6 @@ public class GlassClicker : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log(transform.parent.gameObject.transform.childCount);
+        playManager.ActionOnClick(gameObject);
     }
 }

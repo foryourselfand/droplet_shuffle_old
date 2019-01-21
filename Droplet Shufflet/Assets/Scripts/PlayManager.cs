@@ -21,6 +21,7 @@ public class PlayManager : MonoBehaviour
     private GameObject[] _glasses;
     private GameObject[] _boys;
     private GameObject[] _fingers;
+    private GameObject[] _clickedGlasses;
 
     #endregion
 
@@ -29,6 +30,8 @@ public class PlayManager : MonoBehaviour
     private Helper _helper;
     private int _lastShadow = -1;
     private bool _canClick;
+    private int _clickedBoysCount;
+    private int _maxBoysCount;
 
     #endregion
 
@@ -40,6 +43,9 @@ public class PlayManager : MonoBehaviour
         _helper.SaveInArrayFromParent(GlassesParent, ref _glasses);
         _helper.SaveInArrayFromParent(BoysParent, ref _boys);
         _helper.SaveInArrayFromParent(FingersParent, ref _fingers);
+
+        _maxBoysCount = _boys.Length;
+        _clickedGlasses = new GameObject[_maxBoysCount];
     }
 
     private void Start()
@@ -148,11 +154,22 @@ public class PlayManager : MonoBehaviour
 
     public void ActionOnClick(GameObject glass)
     {
-        if (!_canClick) return;
+        if (!_canClick || glass.transform.localPosition.y != 0.3F) return;
+        _clickedGlasses[_clickedBoysCount] = glass;
         glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, 0.5F));
         if (BoyIn(glass))
         {
-            Debug.Log("True");
+            _clickedBoysCount++;
+            if (_clickedBoysCount == _maxBoysCount)
+            {
+                _canClick = false;
+                StartCoroutine(Win());
+            }
+        }
+        else
+        {
+            _canClick = false;
+            Debug.Log("Game Over");
         }
     }
 
@@ -163,5 +180,26 @@ public class PlayManager : MonoBehaviour
                 return true;
 
         return false;
+    }
+
+    private IEnumerator Win()
+    {
+        foreach (var glass in _clickedGlasses)
+        {
+            yield return _helper.WaitUntilChangerDone(glass);
+        }
+
+        var directory = 0.1F;
+        for (var i = 0; i < _maxBoysCount; i++)
+        {
+            foreach (var boy in _boys)
+            {
+                boy.transform.localPosition += new Vector3(0, directory, 0);
+            }
+
+            directory *= -1;
+
+            yield return new WaitForSeconds(1);
+        }
     }
 }

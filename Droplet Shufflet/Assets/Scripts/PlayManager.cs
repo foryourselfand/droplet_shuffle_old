@@ -45,7 +45,7 @@ public class PlayManager : MonoBehaviour
     private void ActionWhenStart()
     {
         for (var i = 0; i < _glasses.Length; i++)
-            SetParentToShadowAndSetY(_glasses[i], i, 0.3F);
+            _helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
 
         for (var i = 0; i < _boys.Length; i++)
         {
@@ -54,7 +54,7 @@ public class PlayManager : MonoBehaviour
                 var tempNumber = Random.Range(0, _shadows.Length);
 
                 if (_shadows[tempNumber].transform.childCount != 1) continue;
-                SetParentToShadowAndSetY(_boys[i], tempNumber, 0.12F);
+                _helper.SetParentAndY(_boys[i], _shadows[tempNumber], 0.12F);
 
                 break;
             }
@@ -65,11 +65,11 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator ShowWhereToMemento()
     {
-        yield return MoveGlassByAndWaitForDone(0.5F);
+        yield return MoveGlassAndWaitForDone(0.5F);
 
         yield return new WaitForSeconds(TimeToMemento);
 
-        yield return MoveGlassByAndWaitForDone(-0.5F);
+        yield return MoveGlassAndWaitForDone(-0.5F);
 
         StartCoroutine(MoveShadows());
     }
@@ -86,14 +86,14 @@ public class PlayManager : MonoBehaviour
             _lastShadow = firstShadow;
 
             for (var i = 0; i < _fingers.Length; i++)
-                SetParentToShadowAndSetY(_fingers[i], firstShadow + i, 0.82F);
+                _helper.SetParentAndY(_fingers[i], _shadows[firstShadow + i], 0.82F);
 
             break;
         }
 
-        foreach (var finger in _fingers)
-            finger.GetComponent<OpacityChanger>().SetTarget(1);
         ChangeScaleOnFingers();
+
+        yield return OpacityFingersAndWaitForDone(1);
 
         var multiply = Random.Range(0, 2) == 0 ? 1 : -1;
 
@@ -104,17 +104,10 @@ public class PlayManager : MonoBehaviour
 
         yield return MoveShadowAndWaitForDone(firstShadow, -multiply);
 
-        foreach (var finger in _fingers)
-            finger.GetComponent<OpacityChanger>().SetTarget(0);
-
         _helper.Swap(ref _fingers[0], ref _fingers[1]);
         _helper.Swap(ref _shadows[firstShadow], ref _shadows[firstShadow + 1]);
-    }
 
-    private void SetParentToShadowAndSetY(GameObject objectToChange, int shadowNumber, float yToChange)
-    {
-        objectToChange.transform.parent = _shadows[shadowNumber].transform;
-        objectToChange.transform.localPosition = new Vector2(0, yToChange);
+        yield return OpacityFingersAndWaitForDone(0);
     }
 
     private void ChangeScaleOnFingers()
@@ -124,7 +117,7 @@ public class PlayManager : MonoBehaviour
         _fingers[1].transform.localScale = new Vector3(-1 * fingerScale, 1, 1);
     }
 
-    private IEnumerator MoveGlassByAndWaitForDone(float byY)
+    private IEnumerator MoveGlassAndWaitForDone(float byY)
     {
         foreach (var glass in _glasses)
             glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, byY));
@@ -137,5 +130,12 @@ public class PlayManager : MonoBehaviour
         _shadows[firstShadow + 1].GetComponent<PositionChanger>().SetTarget(new Vector2(-0.5F, -multiply * 0.5F));
 
         yield return _helper.WaitUntilChangerDone(_shadows[firstShadow]);
+    }
+
+    private IEnumerator OpacityFingersAndWaitForDone(float target)
+    {
+        foreach (var finger in _fingers)
+            finger.GetComponent<OpacityChanger>().SetTarget(target);
+        yield return _helper.WaitUntilChangerDone(_fingers[0]);
     }
 }

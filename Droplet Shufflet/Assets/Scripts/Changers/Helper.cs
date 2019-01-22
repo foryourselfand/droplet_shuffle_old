@@ -18,6 +18,17 @@ public class Helper
         child.transform.localPosition = new Vector2(0, y);
     }
 
+    public IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY, int length)
+    {
+        for (var i = 0; i < length; i++)
+        {
+            var glass = glasses[i];
+            glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, byY));
+        }
+
+        yield return WaitUntilChangerDone(glasses[0]);
+    }
+
     public IEnumerator WaitUntilChangerDone(GameObject objectToWait)
     {
         yield return new WaitUntil(() => objectToWait.GetComponent<Changer>().IsDone());

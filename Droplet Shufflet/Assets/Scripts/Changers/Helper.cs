@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Helper
 {
-    public void SaveInArrayFromParent(GameObject parent, ref GameObject[] objectsArray)
+    public static void SaveInArrayFromParent(GameObject parent, ref GameObject[] objectsArray)
     {
         var childCount = parent.transform.childCount;
         objectsArray = new GameObject[childCount];
@@ -12,13 +12,13 @@ public class Helper
             objectsArray[i] = parent.transform.GetChild(i).gameObject;
     }
 
-    public void SetParentAndY(GameObject child, GameObject parent, float y)
+    public static void SetParentAndY(GameObject child, GameObject parent, float y)
     {
         child.transform.parent = parent.transform;
         child.transform.localPosition = new Vector2(0, y);
     }
 
-    public IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY, int length)
+    public static IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY, int length)
     {
         for (var i = 0; i < length; i++)
         {
@@ -29,12 +29,21 @@ public class Helper
         yield return WaitUntilChangerDone(glasses[0]);
     }
 
-    public IEnumerator WaitUntilChangerDone(GameObject objectToWait)
+    public static IEnumerator WaitUntilChangerDone(GameObject objectToWait)
     {
         yield return new WaitUntil(() => objectToWait.GetComponent<Changer>().IsDone());
     }
 
-    public void Swap(ref GameObject first, ref GameObject second)
+    public static bool BoyIn(GameObject glass)
+    {
+        foreach (Transform child in glass.transform.parent)
+            if (child.CompareTag("Boy"))
+                return true;
+
+        return false;
+    }
+
+    public static void Swap(ref GameObject first, ref GameObject second)
     {
         var temp = first;
         first = second;

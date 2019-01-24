@@ -508,9 +508,9 @@ GameObject:
   m_Component:
   - component: {fileID: 236833952}
   - component: {fileID: 236833957}
-  - component: {fileID: 236833956}
   - component: {fileID: 236833955}
   - component: {fileID: 236833954}
+  - component: {fileID: 236833956}
   - component: {fileID: 236833953}
   - component: {fileID: 236833958}
   m_Layer: 0
@@ -629,7 +629,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1104,9 +1104,9 @@ GameObject:
   m_Component:
   - component: {fileID: 697135372}
   - component: {fileID: 697135373}
-  - component: {fileID: 697135375}
   - component: {fileID: 697135376}
   - component: {fileID: 697135377}
+  - component: {fileID: 697135375}
   - component: {fileID: 697135374}
   - component: {fileID: 697135378}
   m_Layer: 0
@@ -1165,7 +1165,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1331,9 +1331,9 @@ GameObject:
   m_Component:
   - component: {fileID: 905401973}
   - component: {fileID: 905401974}
-  - component: {fileID: 905401976}
   - component: {fileID: 905401977}
   - component: {fileID: 905401978}
+  - component: {fileID: 905401976}
   - component: {fileID: 905401975}
   - component: {fileID: 905401979}
   m_Layer: 0
@@ -1392,7 +1392,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2051,7 +2051,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a6a9efb3bde408ba0a6e11b2485669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeToMemento: 0.5
   ShadowsParent: {fileID: 1679856939}
   GlassesParent: {fileID: 142667429}
   BoysParent: {fileID: 976994066}
@@ -2273,7 +2272,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2377,9 +2376,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1941617927}
   - component: {fileID: 1941617928}
-  - component: {fileID: 1941617930}
   - component: {fileID: 1941617931}
   - component: {fileID: 1941617932}
+  - component: {fileID: 1941617930}
   - component: {fileID: 1941617929}
   - component: {fileID: 1941617933}
   m_Layer: 0
@@ -2438,7 +2437,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

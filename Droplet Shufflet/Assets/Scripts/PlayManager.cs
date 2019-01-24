@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayManager : MonoBehaviour
 {
-    public float TimeToMemento;
-
     #region Parents
 
     public GameObject ShadowsParent;
@@ -55,7 +53,8 @@ public class PlayManager : MonoBehaviour
     {
         DefineOnStart();
 
-        ActionAfterReady();
+        //TODO: Wait Until Shadow Done
+        ActionAfterShadowDone();
     }
 
     private void DefineOnStart()
@@ -101,34 +100,31 @@ public class PlayManager : MonoBehaviour
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetCurrent(0);
 
-        Helper.SetStartOpacityToBounds(ref _glasses);
-        Helper.SetStartOpacityToBounds(ref _shadows);
+
+        foreach (var finger in _fingers)
+            finger.GetComponent<OpacityChanger>().SetCurrent(0);
+
+        Helper.SetStartOpacityToBounds(ref _glasses, _leftBorder, _rightBorder);
+        Helper.SetStartOpacityToBounds(ref _shadows, _leftBorder, _rightBorder);
     }
 
-    private void ActionAfterReady()
+    private void ActionAfterShadowDone()
     {
+        //TODO: Wait Until Shadow Done
+
         StartCoroutine(ShowWhereToMemento());
-    }
-
-    private IEnumerator MoveGlassesAndJump(int jumpCount)
-    {
-        yield return Helper.MoveGlassesAndWaitForDone(_glasses, 0.5F, _leftBorder, _rightBorder);
-
-        yield return BoysJumping(jumpCount);
-
-        yield return Helper.MoveGlassesAndWaitForDone(_glasses, -0.5F, _leftBorder, _rightBorder);
     }
 
     private IEnumerator ShowWhereToMemento()
     {
         yield return MoveGlassesAndJump(1);
 
-        StartCoroutine(StartGamePlay());
+        StartCoroutine(CheckLevel());
     }
 
-    private IEnumerator StartGamePlay()
+    private IEnumerator CheckLevel()
     {
-        if (_maxLevel % 2 == 0)
+        if (_maxLevel % _maxBoysCount == 0)
         {
             _maxDistance++;
 
@@ -140,27 +136,28 @@ public class PlayManager : MonoBehaviour
 
             _lastBorder = condition ? _rightBorder + 1 : _leftBorder - 1;
 
-            _leftBorder -= _lastBorder == _leftBorder - 1 ? 1 : 0;
-            _rightBorder += _lastBorder == _rightBorder + 1 ? 1 : 0;
+            _leftBorder -= !condition ? 1 : 0;
+            _rightBorder += condition ? 1 : 0;
 
-
-            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(1F);
-            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(1F);
+            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
+            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
 
             var byX = 0.5F;
             byX *= _lastBorder == _leftBorder ? 1 : -1;
             ShadowsParent.GetComponent<PositionChanger>().SetTarget(new Vector3(byX, 0));
-            yield return Helper.WaitUntilPositionChangerDone(ShadowsParent);
 
-            if (_maxLevel % 4 == 0)
+            yield return Helper.WaitUntilPositionChangerDone(ShadowsParent);
+            yield return Helper.WaitUntilOpacityChangerDone(_shadows[_lastBorder]);
+            yield return Helper.WaitUntilOpacityChangerDone(_glasses[_lastBorder]);
+
+            if (_maxLevel % (_maxBoysCount * 2) == 0)
             {
                 _lastBoy.SetActive(true);
                 Helper.SetParentAndY(_lastBoy, _shadows[_lastBorder], 0.12F);
                 _maxBoysCount++;
-                yield return MoveGlassesAndJump(1);
+                yield return MoveGlassesAndJump(_maxBoysCount);
             }
         }
-
 
         StartCoroutine(MoveShadows());
     }
@@ -192,9 +189,9 @@ public class PlayManager : MonoBehaviour
 
         ChangeOrderInGlasses(firstShadow, multiply);
 
-        yield return MoveShadowsAndWaitForDone(firstShadow, multiply);
+        yield return Helper.MoveShadowsAndWaitForDone(_shadows, firstShadow, _distance, multiply);
 
-        yield return MoveShadowsAndWaitForDone(firstShadow, -multiply);
+        yield return Helper.MoveShadowsAndWaitForDone(_shadows, firstShadow, _distance, -multiply);
 
         ChangeOrderInGlasses(firstShadow, 0);
 
@@ -213,6 +210,15 @@ public class PlayManager : MonoBehaviour
             StartCoroutine(MoveShadows());
     }
 
+    private IEnumerator MoveGlassesAndJump(int jumpCount)
+    {
+        yield return Helper.MoveGlassesAndWaitForDone(_glasses, 0.5F, _leftBorder, _rightBorder + 1);
+
+        yield return BoysJumping(jumpCount);
+
+        yield return Helper.MoveGlassesAndWaitForDone(_glasses, -0.5F, _leftBorder, _rightBorder + 1);
+    }
+
     private void ChangeScaleOnFingers()
     {
         var fingerScale = _fingers[0].transform.position.x < _fingers[1].transform.position.x ? 1 : -1;
@@ -226,43 +232,11 @@ public class PlayManager : MonoBehaviour
         _glasses[firstShadow + _distance].GetComponent<SpriteRenderer>().sortingOrder = 4 + multiply;
     }
 
-    private IEnumerator MoveShadowsAndWaitForDone(int firstShadow, int multiply)
-    {
-        _shadows[firstShadow].GetComponent<PositionChanger>()
-            .SetTarget(new Vector2(_distance * 0.5F, multiply * 0.5F));
-        _shadows[firstShadow + _distance].GetComponent<PositionChanger>()
-            .SetTarget(new Vector2(_distance * -0.5F, -multiply * 0.5F));
-
-        yield return Helper.WaitUntilPositionChangerDone(_shadows[firstShadow]);
-    }
-
-
     private IEnumerator OpacityFingersAndWaitForDone(float target)
     {
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetTarget(target);
         yield return Helper.WaitUntilOpacityChangerDone(_fingers[0]);
-    }
-
-    public void ActionOnClick(GameObject glass)
-    {
-        if (!_canClick || glass.transform.localPosition.y != 0.3F) return;
-        _clickedGlasses[_clickedBoysCount] = glass;
-        glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, 0.5F));
-        if (Helper.BoyIn(glass))
-        {
-            _clickedBoysCount++;
-            if (_clickedBoysCount == _maxBoysCount)
-            {
-                _canClick = false;
-                StartCoroutine(Win());
-            }
-        }
-        else
-        {
-            _canClick = false;
-            StartCoroutine(Lose());
-        }
     }
 
     private IEnumerator BoysJumping(int jumpCount)
@@ -275,32 +249,50 @@ public class PlayManager : MonoBehaviour
 
             directory *= -1;
 
-            yield return new WaitForSeconds(0.5F);
+            yield return new WaitForSeconds(1F / jumpCount);
         }
     }
 
     private IEnumerator Win()
     {
         for (var i = 0; i < _maxBoysCount; i++)
-        {
-            var glass = _clickedGlasses[i];
-            yield return Helper.WaitUntilPositionChangerDone(glass);
-        }
+            yield return Helper.WaitUntilPositionChangerDone(_clickedGlasses[i]);
+
 
         yield return BoysJumping(_maxBoysCount);
-
-        yield return Helper.MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, 0, _maxBoysCount - 1);
+        yield return Helper.MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, 0, _maxBoysCount);
 
         _clickedBoysCount = 0;
         _maxLevel++;
-        StartCoroutine(StartGamePlay());
+        StartCoroutine(CheckLevel());
     }
 
     private IEnumerator Lose()
     {
         yield return Helper.WaitUntilPositionChangerDone(_clickedGlasses[_clickedBoysCount]);
-        yield return new WaitForSeconds(TimeToMemento);
-        yield return Helper.MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, 0, _clickedBoysCount);
+        yield return new WaitForSeconds(1);
+        yield return Helper.MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, 0, _clickedBoysCount + 1);
+
         Debug.Log("Game Over");
+    }
+
+    public void ActionOnClick(GameObject glass)
+    {
+        if (!_canClick || glass.transform.localPosition.y != 0.3F) return;
+        _clickedGlasses[_clickedBoysCount] = glass;
+        glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, 0.5F));
+
+        IEnumerator coroutineToStart = null;
+        if (Helper.BoyIn(glass))
+        {
+            if (++_clickedBoysCount == _maxBoysCount)
+                coroutineToStart = Win();
+        }
+        else
+            coroutineToStart = Lose();
+
+        if (coroutineToStart == null) return;
+        _canClick = false;
+        StartCoroutine(coroutineToStart);
     }
 }

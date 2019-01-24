@@ -26,6 +26,7 @@ public class PlayManager : MonoBehaviour
 
     #region Other
 
+    private GameObject _lastBoy;
     private int _lastShadow = -1;
     private int _distance = 1;
     private int _clickedBoysCount;
@@ -34,7 +35,7 @@ public class PlayManager : MonoBehaviour
     private int _maxLevel = 1;
     private int _leftBorder = 1, _rightBorder = 3;
     private bool _canClick;
-    private GameObject _lastBoy;
+    private int _lastBorder = -1;
 
     #endregion
 
@@ -96,8 +97,6 @@ public class PlayManager : MonoBehaviour
 
         _lastBoy.SetActive(false);
 
-        Debug.Log(_lastBoy.name);
-
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetCurrent(0);
 
@@ -117,6 +116,34 @@ public class PlayManager : MonoBehaviour
         yield return BoysJumping(1);
 
         yield return Helper.MoveGlassesAndWaitForDone(_glasses, -0.5F, _leftBorder, _rightBorder);
+
+        StartCoroutine(StartGamePlay());
+    }
+
+    private IEnumerator StartGamePlay()
+    {
+        if (_maxLevel % 2 == 0)
+        {
+            bool condition;
+            if (_lastBorder == -1)
+                condition = Random.Range(0, 2) == 0;
+            else
+                condition = _lastBorder == _leftBorder;
+
+            _lastBorder = condition ? _rightBorder + 1 : _leftBorder - 1;
+
+            _leftBorder -= _lastBorder == _leftBorder - 1 ? 1 : 0;
+            _rightBorder += _lastBorder == _rightBorder + 1 ? 1 : 0;
+            
+            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
+            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
+
+            var byX = 0.5F;
+            byX *= _lastBorder == _leftBorder ? 1 : -1;
+            ShadowsParent.GetComponent<PositionChanger>().SetTarget(new Vector3(byX, 0));
+            yield return Helper.WaitUntilPositionChangerDone(ShadowsParent);
+        }
+
 
         StartCoroutine(MoveShadows());
     }
@@ -251,7 +278,7 @@ public class PlayManager : MonoBehaviour
 
         _clickedBoysCount = 0;
         _maxLevel++;
-        StartCoroutine(MoveShadows());
+        StartCoroutine(StartGamePlay());
     }
 
     private IEnumerator Lose()

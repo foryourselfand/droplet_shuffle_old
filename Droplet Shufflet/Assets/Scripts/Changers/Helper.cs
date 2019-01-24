@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Helper
 {
-    public static void SaveInArrayFromParent(GameObject parent, ref GameObject[] objectsArray)
+    public static void SaveFromParentToArray(GameObject parent, ref GameObject[] objectsArray)
     {
         var childCount = parent.transform.childCount;
         objectsArray = new GameObject[childCount];
@@ -43,15 +43,15 @@ public class Helper
         second = temp;
     }
 
-    public static IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float y, int leftBorder, int rightBorder)
+    public static IEnumerator MoveGlasses(GameObject[] glasses, float y, int leftBorder, int rightBorder)
     {
         for (var i = leftBorder; i < rightBorder; i++)
             glasses[i].GetComponent<PositionChanger>().SetTarget(new Vector2(0, y));
 
-        yield return WaitUntilPositionChangerDone(glasses[leftBorder]);
+        yield return WaitUntilMoveDone(glasses[leftBorder]);
     }
 
-    public static IEnumerator MoveShadowsAndWaitForDone(GameObject[] shadows, int firstShadow, int distance,
+    public static IEnumerator MoveShadows(GameObject[] shadows, int firstShadow, int distance,
         int multiply)
     {
         shadows[firstShadow].GetComponent<PositionChanger>()
@@ -60,15 +60,15 @@ public class Helper
         shadows[firstShadow + distance].GetComponent<PositionChanger>()
             .SetTarget(new Vector2(distance * -0.5F, -multiply * 0.5F));
 
-        yield return WaitUntilPositionChangerDone(shadows[firstShadow]);
+        yield return WaitUntilMoveDone(shadows[firstShadow]);
     }
 
-    public static IEnumerator WaitUntilPositionChangerDone(GameObject objectToWait)
+    public static IEnumerator WaitUntilMoveDone(GameObject objectToWait)
     {
         yield return new WaitUntil(() => objectToWait.GetComponent<PositionChanger>().IsDone());
     }
 
-    public static IEnumerator WaitUntilOpacityChangerDone(GameObject objectToWait)
+    public static IEnumerator WaitUntilFadeDone(GameObject objectToWait)
     {
         yield return new WaitUntil(() => objectToWait.GetComponent<OpacityChanger>().IsDone());
     }

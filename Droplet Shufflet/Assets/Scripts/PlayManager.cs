@@ -109,13 +109,18 @@ public class PlayManager : MonoBehaviour
         StartCoroutine(ShowWhereToMemento());
     }
 
-    private IEnumerator ShowWhereToMemento()
+    private IEnumerator MoveGlassesAndJump(int jumpCount)
     {
         yield return Helper.MoveGlassesAndWaitForDone(_glasses, 0.5F, _leftBorder, _rightBorder);
 
-        yield return BoysJumping(1);
+        yield return BoysJumping(jumpCount);
 
         yield return Helper.MoveGlassesAndWaitForDone(_glasses, -0.5F, _leftBorder, _rightBorder);
+    }
+
+    private IEnumerator ShowWhereToMemento()
+    {
+        yield return MoveGlassesAndJump(1);
 
         StartCoroutine(StartGamePlay());
     }
@@ -134,7 +139,8 @@ public class PlayManager : MonoBehaviour
 
             _leftBorder -= _lastBorder == _leftBorder - 1 ? 1 : 0;
             _rightBorder += _lastBorder == _rightBorder + 1 ? 1 : 0;
-            
+
+
             _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
             _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
 
@@ -142,6 +148,14 @@ public class PlayManager : MonoBehaviour
             byX *= _lastBorder == _leftBorder ? 1 : -1;
             ShadowsParent.GetComponent<PositionChanger>().SetTarget(new Vector3(byX, 0));
             yield return Helper.WaitUntilPositionChangerDone(ShadowsParent);
+
+            if (_maxLevel % 4 == 0)
+            {
+                _lastBoy.SetActive(true);
+                Helper.SetParentAndY(_lastBoy, _shadows[_lastBorder], 0.12F);
+                _maxBoysCount++;
+                yield return MoveGlassesAndJump(1);
+            }
         }
 
 

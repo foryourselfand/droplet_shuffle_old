@@ -4,8 +4,8 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: Glass
     21300002: Finger
-    21300004: Maket
-    21300006: Yellow
+    21300004: Pattern
+    21300006: White
     21300008: White Pixel
     21300010: Shadow
   externalObjects: {}
@@ -174,7 +174,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Maket
+      name: Pattern
       rect:
         serializedVersion: 2
         x: 3
@@ -194,11 +194,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Yellow
+      name: White
       rect:
         serializedVersion: 2
-        x: 18
-        y: 7
+        x: 17
+        y: 6
         width: 12
         height: 8
       alignment: 0
@@ -237,12 +237,12 @@ TextureImporter:
       name: Shadow
       rect:
         serializedVersion: 2
-        x: 11
+        x: 10
         y: 1
         width: 12
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

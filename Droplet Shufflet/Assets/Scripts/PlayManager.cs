@@ -29,6 +29,7 @@ public class PlayManager : MonoBehaviour
     private GameObject _lastBoy;
     private int _lastShadow = -1;
     private int _distance = 1;
+    private int _maxDistance = 2;
     private int _clickedBoysCount;
     private int _maxBoysCount;
     private int _currentLevel;
@@ -129,6 +130,8 @@ public class PlayManager : MonoBehaviour
     {
         if (_maxLevel % 2 == 0)
         {
+            _maxDistance++;
+
             bool condition;
             if (_lastBorder == -1)
                 condition = Random.Range(0, 2) == 0;
@@ -141,8 +144,8 @@ public class PlayManager : MonoBehaviour
             _rightBorder += _lastBorder == _rightBorder + 1 ? 1 : 0;
 
 
-            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
-            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
+            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(1F);
+            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(1F);
 
             var byX = 0.5F;
             byX *= _lastBorder == _leftBorder ? 1 : -1;
@@ -164,9 +167,7 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator MoveShadows()
     {
-//        if (_maxLevel >= 3)
-//            _distance = Random.Range(1, 3);
-        _distance = 1;
+        _distance = Random.Range(1, _maxDistance);
 
         int firstShadow;
         while (true)

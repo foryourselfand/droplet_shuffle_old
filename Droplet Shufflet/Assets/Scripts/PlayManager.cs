@@ -34,6 +34,7 @@ public class PlayManager : MonoBehaviour
     private int _maxLevel = 1;
     private int _leftBorder = 1, _rightBorder = 3;
     private bool _canClick;
+    private GameObject _lastBoy;
 
     #endregion
 
@@ -60,28 +61,48 @@ public class PlayManager : MonoBehaviour
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
 
+
+        var lastBoyNumber = -1;
         for (var i = 0; i < _maxBoysCount; i++)
         {
+            GameObject currentBoy;
             while (true)
             {
-                var tempNumber = Random.Range(_leftBorder, _rightBorder);
+                var currentBoyNumber = Random.Range(0, _boys.Length);
 
-                if (_shadows[tempNumber].transform.childCount != 1) continue;
-                Helper.SetParentAndY(_boys[i], _shadows[tempNumber], 0.12F);
+                if (currentBoyNumber == lastBoyNumber) continue;
+
+                lastBoyNumber = currentBoyNumber;
+
+                currentBoy = _boys[currentBoyNumber];
+
+                break;
+            }
+
+            while (true)
+            {
+                var currentShadowIndex = Random.Range(_leftBorder, _rightBorder + 1);
+
+                if (_shadows[currentShadowIndex].transform.childCount != 1) continue;
+                Helper.SetParentAndY(currentBoy, _shadows[currentShadowIndex], 0.12F);
 
                 break;
             }
         }
 
+        foreach (var boy in _boys)
+            if (boy.transform.parent.CompareTag("Shadow") == false)
+                _lastBoy = boy;
+
+        _lastBoy.SetActive(false);
+
+        Debug.Log(_lastBoy.name);
+
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetCurrent(0);
-        
-        
-        _glasses[0].GetComponent<OpacityChanger>().SetCurrent(0);
-        _shadows[0].GetComponent<OpacityChanger>().SetCurrent(0);
-        
-        _glasses[_glasses.Length - 1].GetComponent<OpacityChanger>().SetCurrent(0);
-        _shadows[_shadows.Length - 1].GetComponent<OpacityChanger>().SetCurrent(0);
+
+        Helper.SetStartOpacityToBounds(ref _glasses);
+        Helper.SetStartOpacityToBounds(ref _shadows);
     }
 
     private void ActionAfterReady()
@@ -208,9 +229,7 @@ public class PlayManager : MonoBehaviour
         for (var i = 0; i < jumpCount * 2; i++)
         {
             foreach (var boy in _boys)
-            {
                 boy.transform.localPosition += new Vector3(0, directory, 0);
-            }
 
             directory *= -1;
 
@@ -220,12 +239,15 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator Win()
     {
-        foreach (var glass in _clickedGlasses)
+        for (var i = 0; i < _maxBoysCount; i++)
+        {
+            var glass = _clickedGlasses[i];
             yield return Helper.WaitUntilPositionChangerDone(glass);
+        }
 
         yield return BoysJumping(_maxBoysCount);
 
-        yield return Helper.MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, 0, _clickedGlasses.Length - 1);
+        yield return Helper.MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, 0, _maxBoysCount - 1);
 
         _clickedBoysCount = 0;
         _maxLevel++;

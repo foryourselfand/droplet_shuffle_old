@@ -18,6 +18,12 @@ public class Helper
         child.transform.localPosition = new Vector2(0, y);
     }
 
+    public static void SetStartOpacityToBounds(ref GameObject[] gameObjects)
+    {
+        gameObjects[0].GetComponent<OpacityChanger>().SetCurrent(0);
+        gameObjects[gameObjects.Length - 1].GetComponent<OpacityChanger>().SetCurrent(0);
+    }
+
     public static IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY, int leftBorder,
         int rightBorder)
     {

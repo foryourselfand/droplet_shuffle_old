@@ -32,6 +32,7 @@ public class PlayManager : MonoBehaviour
     private int _maxBoysCount;
     private int _currentLevel;
     private int _maxLevel = 1;
+    private int _leftBorder = 1, _rightBorder = 3;
     private bool _canClick;
 
     #endregion
@@ -43,65 +44,79 @@ public class PlayManager : MonoBehaviour
         Helper.SaveInArrayFromParent(BoysParent, ref _boys);
         Helper.SaveInArrayFromParent(FingersParent, ref _fingers);
 
-        _maxBoysCount = _boys.Length;
-        _clickedGlasses = new GameObject[_maxBoysCount];
+        _maxBoysCount = 2;
+        _clickedGlasses = new GameObject[_boys.Length];
     }
 
     private void Start()
     {
-        ActionWhenStart();
+        DefineOnStart();
+
+        ActionAfterReady();
     }
 
-    private void ActionWhenStart()
+    private void DefineOnStart()
     {
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
 
-        foreach (var boy in _boys)
+        for (var i = 0; i < _maxBoysCount; i++)
         {
             while (true)
             {
-                var tempNumber = Random.Range(0, _shadows.Length);
+                var tempNumber = Random.Range(_leftBorder, _rightBorder);
 
                 if (_shadows[tempNumber].transform.childCount != 1) continue;
-                Helper.SetParentAndY(boy, _shadows[tempNumber], 0.12F);
+                Helper.SetParentAndY(_boys[i], _shadows[tempNumber], 0.12F);
 
                 break;
             }
         }
 
+        foreach (var finger in _fingers)
+            finger.GetComponent<OpacityChanger>().SetCurrent(0);
+        
+        
+        _glasses[0].GetComponent<OpacityChanger>().SetCurrent(0);
+        _shadows[0].GetComponent<OpacityChanger>().SetCurrent(0);
+        
+        _glasses[_glasses.Length - 1].GetComponent<OpacityChanger>().SetCurrent(0);
+        _shadows[_shadows.Length - 1].GetComponent<OpacityChanger>().SetCurrent(0);
+    }
+
+    private void ActionAfterReady()
+    {
         StartCoroutine(ShowWhereToMemento());
     }
 
     private IEnumerator ShowWhereToMemento()
     {
-        yield return MoveGlassesAndWaitForDone(_glasses, 0.5F);
-
-        yield return new WaitForSeconds(TimeToMemento);
+        yield return Helper.MoveGlassesAndWaitForDone(_glasses, 0.5F, _leftBorder, _rightBorder);
 
         yield return BoysJumping(1);
 
-        yield return MoveGlassesAndWaitForDone(_glasses, -0.5F);
+        yield return Helper.MoveGlassesAndWaitForDone(_glasses, -0.5F, _leftBorder, _rightBorder);
 
         StartCoroutine(MoveShadows());
     }
 
     private IEnumerator MoveShadows()
     {
+//        if (_maxLevel >= 3)
+//            _distance = Random.Range(1, 3);
+        _distance = 1;
+
         int firstShadow;
-        if (_maxLevel >= 3)
-            _distance = Random.Range(1, 3);
         while (true)
         {
-            firstShadow = Random.Range(0, _shadows.Length - _distance);
+            firstShadow = Random.Range(_leftBorder, _rightBorder - _distance + 1);
 
             if (firstShadow == _lastShadow) continue;
 
             _lastShadow = firstShadow;
 
             for (var i = 0; i < _fingers.Length; i++)
-                Helper.SetParentAndY(_fingers[i], _shadows[firstShadow + i * _distance],
-                    0.82F); //TODO: Level Increasing
+                Helper.SetParentAndY(_fingers[i], _shadows[firstShadow + i * _distance], 0.82F);
 
             break;
         }
@@ -148,11 +163,6 @@ public class PlayManager : MonoBehaviour
         _glasses[firstShadow + _distance].GetComponent<SpriteRenderer>().sortingOrder = 4 + multiply;
     }
 
-    private IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY)
-    {
-        yield return Helper.MoveGlassesAndWaitForDone(glasses, byY, glasses.Length);
-    }
-
     private IEnumerator MoveShadowsAndWaitForDone(int firstShadow, int multiply)
     {
         _shadows[firstShadow].GetComponent<PositionChanger>()
@@ -160,14 +170,15 @@ public class PlayManager : MonoBehaviour
         _shadows[firstShadow + _distance].GetComponent<PositionChanger>()
             .SetTarget(new Vector2(_distance * -0.5F, -multiply * 0.5F));
 
-        yield return Helper.WaitUntilChangerDone(_shadows[firstShadow]);
+        yield return Helper.WaitUntilPositionChangerDone(_shadows[firstShadow]);
     }
+
 
     private IEnumerator OpacityFingersAndWaitForDone(float target)
     {
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetTarget(target);
-        yield return Helper.WaitUntilChangerDone(_fingers[0]);
+        yield return Helper.WaitUntilOpacityChangerDone(_fingers[0]);
     }
 
     public void ActionOnClick(GameObject glass)
@@ -210,11 +221,11 @@ public class PlayManager : MonoBehaviour
     private IEnumerator Win()
     {
         foreach (var glass in _clickedGlasses)
-            yield return Helper.WaitUntilChangerDone(glass);
+            yield return Helper.WaitUntilPositionChangerDone(glass);
 
         yield return BoysJumping(_maxBoysCount);
 
-        yield return MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F);
+        yield return Helper.MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, 0, _clickedGlasses.Length - 1);
 
         _clickedBoysCount = 0;
         _maxLevel++;
@@ -223,9 +234,9 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator Lose()
     {
-        yield return Helper.WaitUntilChangerDone(_clickedGlasses[_clickedBoysCount]);
+        yield return Helper.WaitUntilPositionChangerDone(_clickedGlasses[_clickedBoysCount]);
         yield return new WaitForSeconds(TimeToMemento);
-        yield return Helper.MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, _clickedBoysCount + 1);
+        yield return Helper.MoveGlassesAndWaitForDone(_clickedGlasses, -0.5F, 0, _clickedBoysCount);
         Debug.Log("Game Over");
     }
 }

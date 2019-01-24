@@ -18,20 +18,26 @@ public class Helper
         child.transform.localPosition = new Vector2(0, y);
     }
 
-    public static IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY, int length)
+    public static IEnumerator MoveGlassesAndWaitForDone(GameObject[] glasses, float byY, int leftBorder,
+        int rightBorder)
     {
-        for (var i = 0; i < length; i++)
+        for (var i = leftBorder; i < rightBorder + 1; i++)
         {
             var glass = glasses[i];
             glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, byY));
         }
 
-        yield return WaitUntilChangerDone(glasses[0]);
+        yield return WaitUntilPositionChangerDone(glasses[leftBorder]);
     }
 
-    public static IEnumerator WaitUntilChangerDone(GameObject objectToWait)
+    public static IEnumerator WaitUntilPositionChangerDone(GameObject objectToWait)
     {
-        yield return new WaitUntil(() => objectToWait.GetComponent<Changer>().IsDone());
+        yield return new WaitUntil(() => objectToWait.GetComponent<PositionChanger>().IsDone());
+    }
+
+    public static IEnumerator WaitUntilOpacityChangerDone(GameObject objectToWait)
+    {
+        yield return new WaitUntil(() => objectToWait.GetComponent<OpacityChanger>().IsDone());
     }
 
     public static bool BoyIn(GameObject glass)

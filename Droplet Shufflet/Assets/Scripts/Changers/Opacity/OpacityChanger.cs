@@ -36,11 +36,16 @@ public class OpacityChanger : Changer
         _target = target;
     }
 
-    public void SetCurrentAndTarget(float current, float target)
+    public void SetCurrent(float current)
     {
         var tmp = _spriteRenderer.color;
         tmp.a = current;
         _spriteRenderer.color = tmp;
+    }
+
+    public void SetCurrentAndTarget(float current, float target)
+    {
+        SetCurrent(target);
         SetTarget(target);
     }
 }

@@ -63,7 +63,7 @@ public class PlayManager : MonoBehaviour
     private void DefineOnStart()
     {
         CameraChanger.SetCurrent(_maxBoysCount + 1);
-        
+
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
 
@@ -132,8 +132,7 @@ public class PlayManager : MonoBehaviour
         if (_maxLevel % _maxBoysCount == 0)
         {
             _maxDistance++;
-            
-            CameraChanger.SetTarget(1);
+
 
             bool condition;
             if (_lastBorder == -1)
@@ -153,9 +152,12 @@ public class PlayManager : MonoBehaviour
             byX *= _lastBorder == _leftBorder ? 1 : -1;
             ShadowsParent.GetComponent<PositionChanger>().SetTarget(new Vector3(byX, 0));
 
+            CameraChanger.SetTarget(1);
+
             yield return Helper.WaitUntilMoveDone(ShadowsParent);
             yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]);
             yield return Helper.WaitUntilFadeDone(_glasses[_lastBorder]);
+            yield return Helper.WaitUntilChangerDone<CameraChanger>(CameraChanger.gameObject);
 
             if (_maxLevel % (_maxBoysCount * 2) == 0)
             {
@@ -164,10 +166,14 @@ public class PlayManager : MonoBehaviour
                 _maxLevel = 1;
                 Helper.SetParentAndY(_lastBoy, _shadows[_lastBorder], 0.12F);
 
+                yield return MoveGlassesAndJump(_maxBoysCount);
+            }
+            else
+            {
                 _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, 0.5F));
                 yield return Helper.WaitUntilMoveDone(_glasses[_lastBorder]);
 
-                yield return JumpBoys(_maxBoysCount);
+                yield return new WaitForSeconds(0.2F);
 
                 _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, -0.5F));
                 yield return Helper.WaitUntilMoveDone(_glasses[_lastBorder]);

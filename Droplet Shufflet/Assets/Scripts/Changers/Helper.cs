@@ -65,13 +65,18 @@ public class Helper
         yield return WaitUntilMoveDone(shadows[firstShadow]);
     }
 
-    public static IEnumerator WaitUntilMoveDone(GameObject objectToWait)
+    public static IEnumerator WaitUntilChangerDone<T>(GameObject objectToWait)
     {
-        yield return new WaitUntil(() => objectToWait.GetComponent<PositionChanger>().IsDone());
+        yield return new WaitUntil(() => (objectToWait.GetComponent<T>() as Changer).IsDone());
     }
 
+    public static IEnumerator WaitUntilMoveDone(GameObject objectToWait)
+    {
+        yield return WaitUntilChangerDone<PositionChanger>(objectToWait);
+    }
+    
     public static IEnumerator WaitUntilFadeDone(GameObject objectToWait)
     {
-        yield return new WaitUntil(() => objectToWait.GetComponent<OpacityChanger>().IsDone());
+        yield return WaitUntilChangerDone<OpacityChanger>(objectToWait);
     }
 }

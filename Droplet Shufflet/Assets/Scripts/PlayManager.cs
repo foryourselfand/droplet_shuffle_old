@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayManager : MonoBehaviour
@@ -16,8 +17,8 @@ public class PlayManager : MonoBehaviour
 
     private GameObject[] _shadows;
     private GameObject[] _glasses;
-    private GameObject[] _allBoys;
-    private GameObject[] _currentBoys;
+    private List<GameObject> _allBoys;
+    private List<GameObject> _currentBoys;
     private GameObject[] _fingers;
     private GameObject[] _clickedGlasses;
 
@@ -25,7 +26,6 @@ public class PlayManager : MonoBehaviour
 
     #region Other
 
-    private GameObject _lastBoy;
     private int _firstShadow;
     private int _lastShadow = -1;
     private int _distance = 1;
@@ -34,7 +34,7 @@ public class PlayManager : MonoBehaviour
     private int _maxBoysCount;
     private int _currentLevel;
     private int _maxLevel = 1;
-    private int _leftBorder = 1, _rightBorder = 3;
+    private int _leftBorder = 3, _rightBorder = 5;
     private bool _canClick;
     private int _lastBorder = -1;
 
@@ -46,11 +46,12 @@ public class PlayManager : MonoBehaviour
     {
         Helper.SaveFromParentToArray(ShadowsParent, ref _shadows);
         Helper.SaveFromParentToArray(GlassesParent, ref _glasses);
-        Helper.SaveFromParentToArray(BoysParent, ref _currentBoys);
         Helper.SaveFromParentToArray(FingersParent, ref _fingers);
+        Helper.SaveFromParentToList(BoysParent, ref _allBoys);
+        _currentBoys = new List<GameObject>();
 
         _maxBoysCount = 2;
-        _clickedGlasses = new GameObject[_currentBoys.Length];
+        _clickedGlasses = new GameObject[_allBoys.Count];
     }
 
     private void Start()
@@ -68,40 +69,29 @@ public class PlayManager : MonoBehaviour
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
 
-
-        var lastBoyNumber = -1;
         for (var i = 0; i < _maxBoysCount; i++)
         {
-            GameObject currentBoy;
-            while (true)
-            {
-                var currentBoyNumber = Random.Range(0, _currentBoys.Length);
+            var currentBoyNumber = Random.Range(0, _allBoys.Count);
 
-                if (currentBoyNumber == lastBoyNumber) continue;
-
-                lastBoyNumber = currentBoyNumber;
-
-                currentBoy = _currentBoys[currentBoyNumber];
-
-                break;
-            }
+            GameObject temp;
+            Helper.SaveRemoveFromAndAddTo(out temp, ref _allBoys, ref _currentBoys, currentBoyNumber);
+//            var temp = _allBoys[currentBoyNumber];
+//            _currentBoys.Add(temp);
+//            _allBoys.RemoveAt(currentBoyNumber);
 
             while (true)
             {
                 var currentShadowIndex = Random.Range(_leftBorder, _rightBorder + 1);
 
                 if (_shadows[currentShadowIndex].transform.childCount != 1) continue;
-                Helper.SetParentAndY(currentBoy, _shadows[currentShadowIndex], 0.12F);
+                Helper.SetParentAndY(temp, _shadows[currentShadowIndex], 0.12F);
 
                 break;
             }
         }
 
-        foreach (var boy in _currentBoys)
-            if (boy.transform.parent.CompareTag("Shadow") == false)
-                _lastBoy = boy;
-
-        _lastBoy.SetActive(false);
+        foreach (var boy in _allBoys)
+            boy.SetActive(false);
 
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetCurrent(0);
@@ -129,11 +119,12 @@ public class PlayManager : MonoBehaviour
     }
 
     private IEnumerator CheckLevel()
+
+
     {
-        if (_maxLevel % _maxBoysCount == 0)
+        if (_maxLevel % (_maxBoysCount + 1) == 0 && _maxBoysCount != 5)
         {
             _maxDistance++;
-
 
             bool condition;
             if (_lastBorder == -1)
@@ -141,16 +132,13 @@ public class PlayManager : MonoBehaviour
             else
                 condition = _lastBorder == _leftBorder;
 
-            _lastBorder = condition ? _rightBorder + 1 : _leftBorder - 1;
+            _lastBorder = condition ? ++_rightBorder : --_leftBorder;
 
-            _leftBorder -= !condition ? 1 : 0;
-            _rightBorder += condition ? 1 : 0;
-
-            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
-            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
+            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(1F);
+            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(1F);
 
             var byX = 0.5F;
-            byX *= _lastBorder == _leftBorder ? 1 : -1;
+            byX *= condition ? -1 : 1;
             ShadowsParent.GetComponent<PositionChanger>().SetTarget(new Vector3(byX, 0));
 
             CameraChanger.SetTarget(1);
@@ -160,13 +148,18 @@ public class PlayManager : MonoBehaviour
             yield return Helper.WaitUntilFadeDone(_glasses[_lastBorder]);
             yield return Helper.WaitUntilChangerDone<CameraChanger>(CameraChanger.gameObject);
 
-            if (_maxLevel % (_maxBoysCount * 2) == 0)
+            if (_maxLevel % ((_maxBoysCount + 1) * 2) == 0)
             {
                 _maxBoysCount++;
                 _maxLevel = 1;
 
-                _lastBoy.SetActive(true);
-                Helper.SetParentAndY(_lastBoy, _shadows[_lastBorder], 0.12F);
+                var currentBoyNumber = Random.Range(0, _allBoys.Count);
+
+                GameObject freshBoy;
+                Helper.SaveRemoveFromAndAddTo(out freshBoy, ref _allBoys, ref _currentBoys, currentBoyNumber);
+
+                freshBoy.SetActive(true);
+                Helper.SetParentAndY(freshBoy, _shadows[_lastBorder], 0.12F);
 
                 yield return MoveGlassesAndJump(_maxBoysCount);
             }

@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 public class Helper
 {
@@ -10,6 +12,15 @@ public class Helper
 
         for (var i = 0; i < childCount; i++)
             objectsArray[i] = parent.transform.GetChild(i).gameObject;
+    }
+
+    public static void SaveFromParentToList(GameObject parent, ref List<GameObject> objectsArray)
+    {
+        var childCount = parent.transform.childCount;
+        objectsArray = new List<GameObject>();
+
+        for (var i = 0; i < childCount; i++)
+            objectsArray.Add(parent.transform.GetChild(i).gameObject);
     }
 
     public static void SetParentAndY(GameObject child, GameObject parent, float y)
@@ -43,6 +54,14 @@ public class Helper
         second = temp;
     }
 
+    public static void SaveRemoveFromAndAddTo(out GameObject temp, ref List<GameObject> from, ref List<GameObject> to,
+        int index)
+    {
+        temp = from[index];
+        to.Add(temp);
+        from.RemoveAt(index);
+    }
+
     public static IEnumerator MoveGlasses(GameObject[] glasses, float y, int leftBorder, int rightBorder)
     {
         for (var i = leftBorder; i < rightBorder; i++)
@@ -74,7 +93,7 @@ public class Helper
     {
         yield return WaitUntilChangerDone<PositionChanger>(objectToWait);
     }
-    
+
     public static IEnumerator WaitUntilFadeDone(GameObject objectToWait)
     {
         yield return WaitUntilChangerDone<OpacityChanger>(objectToWait);

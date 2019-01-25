@@ -40,7 +40,7 @@ public class PlayManager : MonoBehaviour
 
     #endregion
 
-    public CameraChanger CameraChanger;
+    public GameObject CameraChanger;
 
     private void Awake()
     {
@@ -64,7 +64,30 @@ public class PlayManager : MonoBehaviour
 
     private void DefineOnStart()
     {
-        CameraChanger.SetCurrent(_maxBoysCount + 1);
+        CameraChanger.GetComponent<CameraChanger>().SetCurrent(_maxBoysCount + 1);
+
+        var colors = new List<Color>();
+        foreach (var boy in _allBoys)
+            colors.Add(boy.transform.GetChild(0).GetComponent<SpriteRenderer>().color);
+
+        foreach (var boy in _allBoys)
+        {
+            var child = boy.transform.GetChild(0);
+            var fillerColor = child.GetComponent<SpriteRenderer>().color;
+            var grandChild = child.transform.GetChild(0).gameObject;
+            while (true)
+            {
+                var tempColor = colors[Random.Range(0, colors.Count)];
+
+                if (fillerColor == tempColor) continue;
+                grandChild.GetComponent<SpriteRenderer>().color = tempColor;
+
+                colors.Remove(tempColor);
+
+                break;
+            }
+        }
+
 
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
@@ -87,11 +110,12 @@ public class PlayManager : MonoBehaviour
             }
         }
 
-        foreach (var boy in _allBoys)
-            boy.SetActive(false);
 
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetCurrent(0);
+
+        foreach (var boy in _allBoys)
+            boy.SetActive(false);
 
         Helper.SetStartOpacityToBounds(ref _glasses, _leftBorder, _rightBorder);
         Helper.SetStartOpacityToBounds(ref _shadows, _leftBorder, _rightBorder);
@@ -128,21 +152,21 @@ public class PlayManager : MonoBehaviour
 
 //            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
 //            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
-            
+
             _shadows[_lastBorder].SetActive(true);
             _glasses[_lastBorder].SetActive(true);
-            
+
 
             var byX = 0.5F;
             byX *= condition ? -1 : 1;
             ShadowsParent.GetComponent<PositionChanger>().SetTarget(new Vector3(byX, 0));
 
-            CameraChanger.SetTarget(1);
+            CameraChanger.GetComponent<CameraChanger>().SetTarget(1);
 
             yield return Helper.WaitUntilChangerDone(ShadowsParent);
 //            yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]);
 //            yield return Helper.WaitUntilFadeDone(_glasses[_lastBorder]);
-            yield return Helper.WaitUntilChangerDone(CameraChanger.gameObject);
+            yield return Helper.WaitUntilChangerDone(CameraChanger);
 
             if (_maxLevel % ((_maxBoysCount + 1) * 2) == 0)
             {

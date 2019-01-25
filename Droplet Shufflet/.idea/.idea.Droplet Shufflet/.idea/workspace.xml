@@ -24,13 +24,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dc2b14d-4f75-4735-9dd0-ba1fa787dca8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Changers/CameraChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Changers/CameraChanger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Changers/Helper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Changers/Helper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Changers/Opacity/OpacityChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Changers/Opacity/OpacityChanger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Changers/Position/PositionChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Changers/Position/PositionChanger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Changers/_Changer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Changers/_Changer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/sprite_sheet.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/sprite_sheet.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/sprite_sheet.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/sprite_sheet.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Play.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Play.unity" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,22 +52,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="cs" value="48" />
+          <entry key="cs" value="49" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="C#" value="48" />
+          <entry key="C#" value="49" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cs" value="12905" />
+          <entry key="cs" value="13438" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="C#" value="12905" />
+          <entry key="C#" value="13438" />
         </counts>
       </usages-collector>
     </session>
@@ -81,42 +77,44 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayManager.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="301" lean-forward="true" selection-start-line="301" selection-end-line="301" />
+            <state relative-caret-position="415">
+              <caret line="77" column="24" lean-forward="true" selection-start-line="77" selection-start-column="24" selection-end-line="77" selection-end-column="24" />
               <folding>
-                <marker date="1548441557042" expanded="false" signature="6:78" ph="..." />
-                <marker date="1548441557042" expanded="true" signature="120:9667" ph="{...}" />
-                <marker date="1548441557042" expanded="false" signature="127:304" ph="Parents" />
-                <marker date="1548441557042" expanded="true" signature="310:570" ph="Arrays" />
-                <marker date="1548441557042" expanded="true" signature="576:976" ph="Other" />
-                <marker date="1548441557042" expanded="true" signature="1043:1452" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="1478:1588" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="1622:2761" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="1847:2412" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="2092:2402" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="2803:2901" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="2947:3042" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="3081:5433" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="3159:5300" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="3460:3629" ph="/* _shadows[_lastBorder].GetComponent&lt;OpacityChanger&gt;().SetTarget(0.75F); ... */" />
-                <marker date="1548441557042" expanded="true" signature="4027:4178" ph="/* yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]); ... */" />
-                <marker date="1548441557042" expanded="true" signature="4319:4819" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="4836:5290" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="5333:5384" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="5475:6045" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="5554:5928" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="6084:6853" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="6707:6788" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="6912:7145" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="7186:7461" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="7531:7735" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="7786:7972" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="8021:8346" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="8105:8340" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="8377:8734" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="8766:9034" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="9083:9665" ph="{...}" />
-                <marker date="1548441557042" expanded="true" signature="9375:9491" ph="{...}" />
+                <marker date="1548446974906" expanded="false" signature="6:78" ph="..." />
+                <marker date="1548446974906" expanded="true" signature="120:10436" ph="{...}" />
+                <marker date="1548446974906" expanded="false" signature="127:304" ph="Parents" />
+                <marker date="1548446974906" expanded="true" signature="310:570" ph="Arrays" />
+                <marker date="1548446974906" expanded="true" signature="576:976" ph="Other" />
+                <marker date="1548446974906" expanded="true" signature="1040:1449" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="1475:1585" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="1619:3535" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="1914:2453" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="2143:2443" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="2620:3185" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="2865:3175" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="3577:3675" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="3721:3816" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="3855:6202" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="3933:6069" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="4234:4403" ph="/* _shadows[_lastBorder].GetComponent&lt;OpacityChanger&gt;().SetTarget(0.75F); ... */" />
+                <marker date="1548446974906" expanded="true" signature="4807:4958" ph="/* yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]); ... */" />
+                <marker date="1548446974906" expanded="true" signature="5088:5588" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="5605:6059" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="6102:6153" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="6244:6814" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="6323:6697" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="6853:7622" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="7476:7557" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="7681:7914" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="7955:8230" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="8300:8504" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="8555:8741" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="8790:9115" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="8874:9109" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="9146:9503" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="9535:9803" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="9852:10434" ph="{...}" />
+                <marker date="1548446974906" expanded="true" signature="10144:10260" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -157,18 +155,6 @@
                 <marker date="1548441518074" expanded="true" signature="341:419" ph="{...}" />
                 <marker date="1548441518074" expanded="true" signature="654:692" ph="{...}" />
                 <marker date="1548441518074" expanded="true" signature="718:765" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/GlassClicker.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-              <folding>
-                <marker date="1548082949031" expanded="true" signature="131:190" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -268,7 +254,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>_helper</find>
       <find>_currentLevel</find>
       <find>,</find>
       <find>MoveShadowsAndWaitForDone</find>
@@ -298,6 +283,7 @@
       <find>OpacityChanger</find>
       <find>_glasses</find>
       <find>Random.Range</find>
+      <find>while (true)</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -417,7 +403,7 @@
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.smartKeys_rider" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -468,12 +454,12 @@
       <workItem from="1548315999718" duration="11952000" />
       <workItem from="1548343437885" duration="5171000" />
       <workItem from="1548406623303" duration="10036000" />
-      <workItem from="1548436855491" duration="2879000" />
+      <workItem from="1548436855491" duration="4955000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68934000" />
+    <option name="totallyTimeSpent" value="71010000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -532,13 +518,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D569CB30-37DD-4660-A175-BF2FB519BD4D/1d/49d7ed34/Component.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="50" column="37" lean-forward="true" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Group Containers/group.com.apple.notes/Media/4BF0565B-9471-4AFB-8FF2-D39E74CDB6AA/PositionChanger.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="746">
@@ -726,44 +705,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D569CB30-37DD-4660-A175-BF2FB519BD4D/1d/49d7ed34/Component.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayManager.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="301" lean-forward="true" selection-start-line="301" selection-end-line="301" />
+        <state relative-caret-position="415">
+          <caret line="77" column="24" lean-forward="true" selection-start-line="77" selection-start-column="24" selection-end-line="77" selection-end-column="24" />
           <folding>
-            <marker date="1548441557042" expanded="false" signature="6:78" ph="..." />
-            <marker date="1548441557042" expanded="true" signature="120:9667" ph="{...}" />
-            <marker date="1548441557042" expanded="false" signature="127:304" ph="Parents" />
-            <marker date="1548441557042" expanded="true" signature="310:570" ph="Arrays" />
-            <marker date="1548441557042" expanded="true" signature="576:976" ph="Other" />
-            <marker date="1548441557042" expanded="true" signature="1043:1452" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="1478:1588" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="1622:2761" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="1847:2412" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="2092:2402" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="2803:2901" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="2947:3042" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="3081:5433" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="3159:5300" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="3460:3629" ph="/* _shadows[_lastBorder].GetComponent&lt;OpacityChanger&gt;().SetTarget(0.75F); ... */" />
-            <marker date="1548441557042" expanded="true" signature="4027:4178" ph="/* yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]); ... */" />
-            <marker date="1548441557042" expanded="true" signature="4319:4819" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="4836:5290" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="5333:5384" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="5475:6045" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="5554:5928" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="6084:6853" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="6707:6788" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="6912:7145" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="7186:7461" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="7531:7735" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="7786:7972" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="8021:8346" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="8105:8340" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="8377:8734" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="8766:9034" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="9083:9665" ph="{...}" />
-            <marker date="1548441557042" expanded="true" signature="9375:9491" ph="{...}" />
+            <marker date="1548446974906" expanded="false" signature="6:78" ph="..." />
+            <marker date="1548446974906" expanded="true" signature="120:10436" ph="{...}" />
+            <marker date="1548446974906" expanded="false" signature="127:304" ph="Parents" />
+            <marker date="1548446974906" expanded="true" signature="310:570" ph="Arrays" />
+            <marker date="1548446974906" expanded="true" signature="576:976" ph="Other" />
+            <marker date="1548446974906" expanded="true" signature="1040:1449" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="1475:1585" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="1619:3535" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="1914:2453" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="2143:2443" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="2620:3185" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="2865:3175" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="3577:3675" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="3721:3816" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="3855:6202" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="3933:6069" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="4234:4403" ph="/* _shadows[_lastBorder].GetComponent&lt;OpacityChanger&gt;().SetTarget(0.75F); ... */" />
+            <marker date="1548446974906" expanded="true" signature="4807:4958" ph="/* yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]); ... */" />
+            <marker date="1548446974906" expanded="true" signature="5088:5588" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="5605:6059" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="6102:6153" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="6244:6814" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="6323:6697" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="6853:7622" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="7476:7557" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="7681:7914" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="7955:8230" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="8300:8504" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="8555:8741" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="8790:9115" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="8874:9109" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="9146:9503" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="9535:9803" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="9852:10434" ph="{...}" />
+            <marker date="1548446974906" expanded="true" signature="10144:10260" ph="{...}" />
           </folding>
         </state>
       </provider>

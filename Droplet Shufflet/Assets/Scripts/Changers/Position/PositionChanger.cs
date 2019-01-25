@@ -6,11 +6,13 @@ public class PositionChanger : Changer
     private Transform _transform;
     private _PositionBehavior _behavior;
     private Vector3 _target;
+    private float _startSpeed;
 
     protected override void DefineChangingComponent()
     {
         _transform = GetComponent<Transform>();
         _behavior = GetComponent<_PositionBehavior>();
+        _startSpeed = Speed;
     }
 
     #region Changer
@@ -36,6 +38,14 @@ public class PositionChanger : Changer
     public void SetTarget(Vector3 target)
     {
         StartChanging();
+        _startSpeed = Speed;
+        _target = _transform.localPosition + target;
+    }
+
+    public void SetTarget(Vector3 target, float addedToSpeed)
+    {
+        StartChanging();
+        Speed = +addedToSpeed;
         _target = _transform.localPosition + target;
     }
 }

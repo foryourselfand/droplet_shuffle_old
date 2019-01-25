@@ -25,6 +25,7 @@ public class PlayManager : MonoBehaviour
     #region Other
 
     private GameObject _lastBoy;
+    private int _firstShadow;
     private int _lastShadow = -1;
     private int _distance = 1;
     private int _maxDistance = 2;
@@ -126,6 +127,7 @@ public class PlayManager : MonoBehaviour
     {
         if (_maxLevel % _maxBoysCount == 0)
         {
+            Debug.Log(string.Format("{0} {1}", _maxLevel.ToString(), _maxBoysCount.ToString()));
             _maxDistance++;
 
             bool condition;
@@ -152,31 +154,33 @@ public class PlayManager : MonoBehaviour
 
             if (_maxLevel % (_maxBoysCount * 2) == 0)
             {
+                Debug.Log("Its Time");
                 _lastBoy.SetActive(true);
                 Helper.SetParentAndY(_lastBoy, _shadows[_lastBorder], 0.12F);
                 _maxBoysCount++;
+                _maxLevel = 1;
+                Debug.Log(string.Format("{0} {1}", _maxLevel.ToString(), _maxBoysCount.ToString()));
                 yield return MoveGlassesAndJump(_maxBoysCount);
             }
         }
 
-        StartCoroutine(MoveShadows());
+        StartCoroutine(FingersSetting());
     }
 
-    private IEnumerator MoveShadows()
+    private IEnumerator FingersSetting()
     {
         _distance = Random.Range(1, _maxDistance);
 
-        int firstShadow;
         while (true)
         {
-            firstShadow = Random.Range(_leftBorder, _rightBorder - _distance + 1);
+            _firstShadow = Random.Range(_leftBorder, _rightBorder - _distance + 1);
 
-            if (firstShadow == _lastShadow) continue;
+            if (_firstShadow == _lastShadow) continue;
 
-            _lastShadow = firstShadow;
+            _lastShadow = _firstShadow;
 
             for (var i = 0; i < _fingers.Length; i++)
-                Helper.SetParentAndY(_fingers[i], _shadows[firstShadow + i * _distance], 0.82F);
+                Helper.SetParentAndY(_fingers[i], _shadows[_firstShadow + i * _distance], 0.82F);
 
             break;
         }
@@ -185,17 +189,22 @@ public class PlayManager : MonoBehaviour
 
         yield return FadeFingers(1);
 
+        StartCoroutine(MoveShadows());
+    }
+
+    private IEnumerator MoveShadows()
+    {
         var multiply = Random.Range(0, 2) == 0 ? 1 : -1;
 
-        ChangeOrderInGlasses(firstShadow, multiply);
+        ChangeOrderInGlasses(_firstShadow, multiply);
 
-        yield return Helper.MoveShadows(_shadows, firstShadow, _distance, multiply);
-        yield return Helper.MoveShadows(_shadows, firstShadow, _distance, -multiply);
+        yield return Helper.MoveShadows(_shadows, _firstShadow, _distance, multiply);
+        yield return Helper.MoveShadows(_shadows, _firstShadow, _distance, -multiply);
 
-        ChangeOrderInGlasses(firstShadow, 0);
+        ChangeOrderInGlasses(_firstShadow, 0);
 
-        Helper.Swap(ref _shadows[firstShadow], ref _shadows[firstShadow + _distance]);
-        Helper.Swap(ref _glasses[firstShadow], ref _glasses[firstShadow + _distance]);
+        Helper.Swap(ref _shadows[_firstShadow], ref _shadows[_firstShadow + _distance]);
+        Helper.Swap(ref _glasses[_firstShadow], ref _glasses[_firstShadow + _distance]);
 
         yield return FadeFingers(0);
 
@@ -204,9 +213,10 @@ public class PlayManager : MonoBehaviour
         {
             _canClick = true;
             _currentLevel = 0;
+            
         }
         else
-            StartCoroutine(MoveShadows());
+            StartCoroutine(FingersSetting());
     }
 
     private IEnumerator MoveGlassesAndJump(int jumpCount)

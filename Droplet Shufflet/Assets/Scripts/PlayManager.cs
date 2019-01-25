@@ -16,7 +16,8 @@ public class PlayManager : MonoBehaviour
 
     private GameObject[] _shadows;
     private GameObject[] _glasses;
-    private GameObject[] _boys;
+    private GameObject[] _allBoys;
+    private GameObject[] _currentBoys;
     private GameObject[] _fingers;
     private GameObject[] _clickedGlasses;
 
@@ -45,11 +46,11 @@ public class PlayManager : MonoBehaviour
     {
         Helper.SaveFromParentToArray(ShadowsParent, ref _shadows);
         Helper.SaveFromParentToArray(GlassesParent, ref _glasses);
-        Helper.SaveFromParentToArray(BoysParent, ref _boys);
+        Helper.SaveFromParentToArray(BoysParent, ref _currentBoys);
         Helper.SaveFromParentToArray(FingersParent, ref _fingers);
 
         _maxBoysCount = 2;
-        _clickedGlasses = new GameObject[_boys.Length];
+        _clickedGlasses = new GameObject[_currentBoys.Length];
     }
 
     private void Start()
@@ -74,13 +75,13 @@ public class PlayManager : MonoBehaviour
             GameObject currentBoy;
             while (true)
             {
-                var currentBoyNumber = Random.Range(0, _boys.Length);
+                var currentBoyNumber = Random.Range(0, _currentBoys.Length);
 
                 if (currentBoyNumber == lastBoyNumber) continue;
 
                 lastBoyNumber = currentBoyNumber;
 
-                currentBoy = _boys[currentBoyNumber];
+                currentBoy = _currentBoys[currentBoyNumber];
 
                 break;
             }
@@ -96,7 +97,7 @@ public class PlayManager : MonoBehaviour
             }
         }
 
-        foreach (var boy in _boys)
+        foreach (var boy in _currentBoys)
             if (boy.transform.parent.CompareTag("Shadow") == false)
                 _lastBoy = boy;
 
@@ -161,9 +162,10 @@ public class PlayManager : MonoBehaviour
 
             if (_maxLevel % (_maxBoysCount * 2) == 0)
             {
-                _lastBoy.SetActive(true);
                 _maxBoysCount++;
                 _maxLevel = 1;
+
+                _lastBoy.SetActive(true);
                 Helper.SetParentAndY(_lastBoy, _shadows[_lastBorder], 0.12F);
 
                 yield return MoveGlassesAndJump(_maxBoysCount);
@@ -173,7 +175,7 @@ public class PlayManager : MonoBehaviour
                 _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, 0.5F));
                 yield return Helper.WaitUntilMoveDone(_glasses[_lastBorder]);
 
-                yield return new WaitForSeconds(0.2F);
+                yield return new WaitForSeconds(0.1F);
 
                 _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, -0.5F));
                 yield return Helper.WaitUntilMoveDone(_glasses[_lastBorder]);
@@ -269,7 +271,7 @@ public class PlayManager : MonoBehaviour
         var directory = 0.1F;
         for (var i = 0; i < jumpCount * 2; i++)
         {
-            foreach (var boy in _boys)
+            foreach (var boy in _currentBoys)
                 boy.transform.localPosition += new Vector3(0, directory, 0);
 
             directory *= -1;

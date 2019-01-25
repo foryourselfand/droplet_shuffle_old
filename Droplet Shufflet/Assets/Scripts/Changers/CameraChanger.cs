@@ -17,7 +17,7 @@ public class CameraChanger : Changer
 
     protected override void Change(float t)
     {
-        _camera.orthographicSize = Mathf.MoveTowards(_camera.orthographicSize, _target, t * Speed);
+        _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _target, t * Speed);
     }
 
     protected override void ActionOnEnd()

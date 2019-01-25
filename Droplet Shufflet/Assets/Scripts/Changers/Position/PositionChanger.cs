@@ -31,6 +31,7 @@ public class PositionChanger : Changer
     {
         _transform.localPosition = _target;
         _behavior.BehaviorActionOnEnd();
+        Speed = _startSpeed;
     }
 
     #endregion
@@ -38,14 +39,13 @@ public class PositionChanger : Changer
     public void SetTarget(Vector3 target)
     {
         StartChanging();
-        _startSpeed = Speed;
         _target = _transform.localPosition + target;
     }
 
-    public void SetTarget(Vector3 target, float addedToSpeed)
+    public void SetTarget(Vector3 target, float speedAdd)
     {
         StartChanging();
-        Speed = +addedToSpeed;
         _target = _transform.localPosition + target;
+        Speed += speedAdd;
     }
 }

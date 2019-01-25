@@ -55,10 +55,12 @@ public class Helper
         int multiply)
     {
         shadows[firstShadow].GetComponent<PositionChanger>()
-            .SetTarget(new Vector2(distance * 0.5F, multiply * 0.5F + multiply * (distance - 1) * 0.1F), distance);
+            .SetTarget(new Vector2(distance * 0.5F, multiply * 0.5F + multiply * (distance - 1) * 0.1F),
+                (distance - 1) / 2F);
 
         shadows[firstShadow + distance].GetComponent<PositionChanger>()
-            .SetTarget(new Vector2(distance * -0.5F, -multiply * 0.5F - multiply * (distance - 1) * 0.1F), distance);
+            .SetTarget(new Vector2(distance * -0.5F, -multiply * 0.5F - multiply * (distance - 1) * 0.1F),
+                (distance - 1) / 2F);
 
         yield return WaitUntilMoveDone(shadows[firstShadow]);
     }

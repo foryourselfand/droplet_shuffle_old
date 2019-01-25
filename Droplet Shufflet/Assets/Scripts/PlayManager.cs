@@ -127,7 +127,6 @@ public class PlayManager : MonoBehaviour
     {
         if (_maxLevel % _maxBoysCount == 0)
         {
-            Debug.Log(string.Format("{0} {1}", _maxLevel.ToString(), _maxBoysCount.ToString()));
             _maxDistance++;
 
             bool condition;
@@ -148,19 +147,25 @@ public class PlayManager : MonoBehaviour
             byX *= _lastBorder == _leftBorder ? 1 : -1;
             ShadowsParent.GetComponent<PositionChanger>().SetTarget(new Vector3(byX, 0));
 
+
             yield return Helper.WaitUntilMoveDone(ShadowsParent);
             yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]);
             yield return Helper.WaitUntilFadeDone(_glasses[_lastBorder]);
 
             if (_maxLevel % (_maxBoysCount * 2) == 0)
             {
-                Debug.Log("Its Time");
                 _lastBoy.SetActive(true);
-                Helper.SetParentAndY(_lastBoy, _shadows[_lastBorder], 0.12F);
                 _maxBoysCount++;
                 _maxLevel = 1;
-                Debug.Log(string.Format("{0} {1}", _maxLevel.ToString(), _maxBoysCount.ToString()));
-                yield return MoveGlassesAndJump(_maxBoysCount);
+                Helper.SetParentAndY(_lastBoy, _shadows[_lastBorder], 0.12F);
+
+                _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, 0.5F));
+                yield return Helper.WaitUntilMoveDone(_glasses[_lastBorder]);
+
+                yield return JumpBoys(_maxBoysCount);
+
+                _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, -0.5F));
+                yield return Helper.WaitUntilMoveDone(_glasses[_lastBorder]);
             }
         }
 
@@ -213,7 +218,6 @@ public class PlayManager : MonoBehaviour
         {
             _canClick = true;
             _currentLevel = 0;
-            
         }
         else
             StartCoroutine(FingersSetting());

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 public class PlayManager : MonoBehaviour
 {
@@ -87,7 +89,6 @@ public class PlayManager : MonoBehaviour
                 break;
             }
         }
-
 
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
@@ -294,7 +295,7 @@ public class PlayManager : MonoBehaviour
 
             directory *= -1;
 
-            yield return new WaitForSeconds(1F / jumpCount);
+            yield return new WaitForSeconds(0.5F / jumpCount);
         }
     }
 
@@ -315,11 +316,28 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator Lose()
     {
-        yield return Helper.WaitUntilChangerDone(_clickedGlasses[_clickedBoysCount]);
+        var loseGlass = _clickedGlasses[_clickedBoysCount];
 
-        yield return new WaitForSeconds(1);
+        yield return Helper.WaitUntilChangerDone(loseGlass);
 
-        yield return Helper.MoveGlasses(_clickedGlasses, -0.5F, 0, _clickedBoysCount + 1);
+        yield return new WaitForSeconds(0.5F);
+
+        loseGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, -0.5F));
+
+        var rightGlasses = _glasses.Where(glass => Helper.BoyIn(glass)).ToList();
+
+        foreach (var rightGlass in rightGlasses)
+            if (rightGlass.transform.localPosition.y == 0.3F)
+                rightGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, 0.5F));
+        foreach (var rightGlass in rightGlasses)
+            yield return Helper.WaitUntilChangerDone(rightGlass);
+
+        yield return new WaitForSeconds(0.5F);
+        
+        foreach (var rightGlass in rightGlasses)
+            rightGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, -0.5F));
+        foreach (var rightGlass in rightGlasses)
+            yield return Helper.WaitUntilChangerDone(rightGlass);
 
         Debug.Log("Game Over");
     }

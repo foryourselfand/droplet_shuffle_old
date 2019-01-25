@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class OpacityChanger : Changer
@@ -13,7 +12,7 @@ public class OpacityChanger : Changer
 
     protected override bool CheckForCondition()
     {
-        return Math.Abs(_spriteRenderer.color.a - _target) > 0.01F;
+        return Mathf.Abs(_spriteRenderer.color.a - _target) > 0.01F;
     }
 
     protected override void Change(float t)

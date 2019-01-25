@@ -7,6 +7,7 @@
         <e p="Scripts" t="Include">
           <e p="Changers" t="Include">
             <e p="_Changer.cs" t="Include" />
+            <e p="CameraChanger.cs" t="Include" />
             <e p="Helper.cs" t="Include" />
             <e p="Opacity" t="Include">
               <e p="OpacityChanger.cs" t="Include" />

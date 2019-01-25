@@ -39,6 +39,8 @@ public class PlayManager : MonoBehaviour
 
     #endregion
 
+    public CameraChanger CameraChanger;
+
     private void Awake()
     {
         Helper.SaveFromParentToArray(ShadowsParent, ref _shadows);
@@ -60,6 +62,8 @@ public class PlayManager : MonoBehaviour
 
     private void DefineOnStart()
     {
+        CameraChanger.SetCurrent(_maxBoysCount + 1);
+        
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
 
@@ -128,6 +132,8 @@ public class PlayManager : MonoBehaviour
         if (_maxLevel % _maxBoysCount == 0)
         {
             _maxDistance++;
+            
+            CameraChanger.SetTarget(1);
 
             bool condition;
             if (_lastBorder == -1)
@@ -146,7 +152,6 @@ public class PlayManager : MonoBehaviour
             var byX = 0.5F;
             byX *= _lastBorder == _leftBorder ? 1 : -1;
             ShadowsParent.GetComponent<PositionChanger>().SetTarget(new Vector3(byX, 0));
-
 
             yield return Helper.WaitUntilMoveDone(ShadowsParent);
             yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OpacityChanger : Changer
+public class OpacityChanger : _Changer
 {
     private SpriteRenderer _spriteRenderer;
     private float _target;

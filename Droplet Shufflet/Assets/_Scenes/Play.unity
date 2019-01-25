@@ -469,7 +469,6 @@ GameObject:
   - component: {fileID: 225737472}
   - component: {fileID: 225737471}
   - component: {fileID: 225737470}
-  - component: {fileID: 225737473}
   m_Layer: 0
   m_Name: Shadow (6)
   m_TagString: Shadow
@@ -560,18 +559,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &225737473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 225737468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!1 &236833951
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +572,6 @@ GameObject:
   - component: {fileID: 236833954}
   - component: {fileID: 236833956}
   - component: {fileID: 236833953}
-  - component: {fileID: 236833958}
   m_Layer: 0
   m_Name: Glass (6)
   m_TagString: Untagged
@@ -702,7 +688,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -712,18 +698,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &236833958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 236833951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!1 &287456911
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +739,6 @@ GameObject:
   - component: {fileID: 385949782}
   - component: {fileID: 385949784}
   - component: {fileID: 385949785}
-  - component: {fileID: 385949786}
   m_Layer: 0
   m_Name: Shadow (2)
   m_TagString: Shadow
@@ -856,18 +829,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTime: 0.1
---- !u!114 &385949786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 385949781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!1 &438341329
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,7 +840,6 @@ GameObject:
   - component: {fileID: 438341334}
   - component: {fileID: 438341333}
   - component: {fileID: 438341332}
-  - component: {fileID: 438341331}
   m_Layer: 0
   m_Name: Shadow
   m_TagString: Shadow
@@ -900,18 +860,6 @@ Transform:
   m_Father: {fileID: 1679856940}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &438341331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 438341329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!114 &438341332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1085,7 +1033,6 @@ GameObject:
   - component: {fileID: 519606140}
   - component: {fileID: 519606139}
   - component: {fileID: 519606138}
-  - component: {fileID: 519606137}
   m_Layer: 0
   m_Name: Glass (1)
   m_TagString: Untagged
@@ -1106,18 +1053,6 @@ Transform:
   m_Father: {fileID: 142667430}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519606137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 519606135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!114 &519606138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1214,7 +1149,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1235,7 +1170,6 @@ GameObject:
   - component: {fileID: 619533544}
   - component: {fileID: 619533545}
   - component: {fileID: 619533546}
-  - component: {fileID: 619533547}
   m_Layer: 0
   m_Name: Shadow (3)
   m_TagString: Shadow
@@ -1326,18 +1260,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTime: 0.1
---- !u!114 &619533547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 619533542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!1 &697135371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,7 +1273,6 @@ GameObject:
   - component: {fileID: 697135377}
   - component: {fileID: 697135375}
   - component: {fileID: 697135374}
-  - component: {fileID: 697135378}
   m_Layer: 0
   m_Name: Glass (4)
   m_TagString: Untagged
@@ -1408,7 +1329,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1478,18 +1399,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playManager: {fileID: 1578150718}
---- !u!114 &697135378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 697135371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!1 &716881367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,7 +1412,6 @@ GameObject:
   - component: {fileID: 716881372}
   - component: {fileID: 716881371}
   - component: {fileID: 716881370}
-  - component: {fileID: 716881369}
   m_Layer: 0
   m_Name: Glass (8)
   m_TagString: Untagged
@@ -1524,18 +1432,6 @@ Transform:
   m_Father: {fileID: 142667430}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &716881369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 716881367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!114 &716881370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,7 +1528,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1655,7 +1551,6 @@ GameObject:
   - component: {fileID: 905401978}
   - component: {fileID: 905401976}
   - component: {fileID: 905401975}
-  - component: {fileID: 905401979}
   m_Layer: 0
   m_Name: Glass (3)
   m_TagString: Untagged
@@ -1712,7 +1607,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1782,18 +1677,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playManager: {fileID: 1578150718}
---- !u!114 &905401979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 905401972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!1 &907726440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1805,7 +1688,6 @@ GameObject:
   - component: {fileID: 907726445}
   - component: {fileID: 907726444}
   - component: {fileID: 907726443}
-  - component: {fileID: 907726442}
   m_Layer: 0
   m_Name: Shadow (1)
   m_TagString: Shadow
@@ -1826,18 +1708,6 @@ Transform:
   m_Father: {fileID: 1679856940}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &907726442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 907726440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!114 &907726443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2164,7 +2034,6 @@ GameObject:
   - component: {fileID: 1096784179}
   - component: {fileID: 1096784178}
   - component: {fileID: 1096784177}
-  - component: {fileID: 1096784176}
   m_Layer: 0
   m_Name: Shadow (7)
   m_TagString: Shadow
@@ -2185,18 +2054,6 @@ Transform:
   m_Father: {fileID: 1679856940}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1096784176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1096784174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!114 &1096784177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2280,7 +2137,6 @@ GameObject:
   - component: {fileID: 1104277496}
   - component: {fileID: 1104277495}
   - component: {fileID: 1104277494}
-  - component: {fileID: 1104277493}
   m_Layer: 0
   m_Name: Glass (7)
   m_TagString: Untagged
@@ -2301,18 +2157,6 @@ Transform:
   m_Father: {fileID: 142667430}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1104277493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1104277491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!114 &1104277494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2409,7 +2253,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2836,7 +2680,6 @@ GameObject:
   - component: {fileID: 1284075852}
   - component: {fileID: 1284075851}
   - component: {fileID: 1284075850}
-  - component: {fileID: 1284075849}
   m_Layer: 0
   m_Name: Shadow (8)
   m_TagString: Shadow
@@ -2857,18 +2700,6 @@ Transform:
   m_Father: {fileID: 1679856940}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1284075849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1284075847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!114 &1284075850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2950,7 +2781,6 @@ GameObject:
   - component: {fileID: 1319532008}
   - component: {fileID: 1319532009}
   - component: {fileID: 1319532010}
-  - component: {fileID: 1319532011}
   m_Layer: 0
   m_Name: Shadow (5)
   m_TagString: Shadow
@@ -3041,18 +2871,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTime: 0.1
---- !u!114 &1319532011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1319532006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!1 &1468356399
 GameObject:
   m_ObjectHideFlags: 0
@@ -3400,7 +3218,6 @@ GameObject:
   - component: {fileID: 1692059989}
   - component: {fileID: 1692059987}
   - component: {fileID: 1692059986}
-  - component: {fileID: 1692059990}
   m_Layer: 0
   m_Name: Glass (2)
   m_TagString: Untagged
@@ -3444,7 +3261,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3527,18 +3344,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playManager: {fileID: 1578150718}
---- !u!114 &1692059990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1692059983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!1 &1757169043
 GameObject:
   m_ObjectHideFlags: 0
@@ -3621,7 +3426,6 @@ GameObject:
   - component: {fileID: 1865537373}
   - component: {fileID: 1865537372}
   - component: {fileID: 1865537371}
-  - component: {fileID: 1865537370}
   m_Layer: 0
   m_Name: Glass
   m_TagString: Untagged
@@ -3642,18 +3446,6 @@ Transform:
   m_Father: {fileID: 142667430}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1865537370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1865537368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!114 &1865537371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3750,7 +3542,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3842,7 +3634,6 @@ GameObject:
   - component: {fileID: 1941617932}
   - component: {fileID: 1941617930}
   - component: {fileID: 1941617929}
-  - component: {fileID: 1941617933}
   m_Layer: 0
   m_Name: Glass (5)
   m_TagString: Untagged
@@ -3899,7 +3690,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 62f6495f1491d42af95aebf916eaaf6d, type: 3}
-  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 1}
+  m_Color: {r: 0.9803922, g: 0.9803922, b: 0.9803922, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3969,18 +3760,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playManager: {fileID: 1578150718}
---- !u!114 &1941617933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1941617926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!1 &2013959489
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,7 +4021,6 @@ GameObject:
   - component: {fileID: 2052898354}
   - component: {fileID: 2052898355}
   - component: {fileID: 2052898356}
-  - component: {fileID: 2052898357}
   m_Layer: 0
   m_Name: Shadow (4)
   m_TagString: Shadow
@@ -4333,15 +4111,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTime: 0.1
---- !u!114 &2052898357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2052898352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94d426c19c84a3ba3b77fbad1670845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6

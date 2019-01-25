@@ -73,18 +73,15 @@ public class PlayManager : MonoBehaviour
         {
             var currentBoyNumber = Random.Range(0, _allBoys.Count);
 
-            GameObject temp;
-            Helper.SaveRemoveFromAndAddTo(out temp, ref _allBoys, ref _currentBoys, currentBoyNumber);
-//            var temp = _allBoys[currentBoyNumber];
-//            _currentBoys.Add(temp);
-//            _allBoys.RemoveAt(currentBoyNumber);
+            GameObject freshBoy;
+            Helper.SaveRemoveFromAndAddTo(out freshBoy, ref _allBoys, ref _currentBoys, currentBoyNumber);
 
             while (true)
             {
                 var currentShadowIndex = Random.Range(_leftBorder, _rightBorder + 1);
 
                 if (_shadows[currentShadowIndex].transform.childCount != 1) continue;
-                Helper.SetParentAndY(temp, _shadows[currentShadowIndex], 0.12F);
+                Helper.SetParentAndY(freshBoy, _shadows[currentShadowIndex], 0.12F);
 
                 break;
             }
@@ -92,10 +89,6 @@ public class PlayManager : MonoBehaviour
 
         foreach (var boy in _allBoys)
             boy.SetActive(false);
-
-        foreach (var finger in _fingers)
-            finger.GetComponent<OpacityChanger>().SetCurrent(0);
-
 
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetCurrent(0);
@@ -120,7 +113,6 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator CheckLevel()
 
-
     {
         if (_maxLevel % (_maxBoysCount + 1) == 0 && _maxBoysCount != 5)
         {
@@ -134,8 +126,12 @@ public class PlayManager : MonoBehaviour
 
             _lastBorder = condition ? ++_rightBorder : --_leftBorder;
 
-            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(1F);
-            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(1F);
+//            _shadows[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
+//            _glasses[_lastBorder].GetComponent<OpacityChanger>().SetTarget(0.75F);
+            
+            _shadows[_lastBorder].SetActive(true);
+            _glasses[_lastBorder].SetActive(true);
+            
 
             var byX = 0.5F;
             byX *= condition ? -1 : 1;
@@ -143,10 +139,10 @@ public class PlayManager : MonoBehaviour
 
             CameraChanger.SetTarget(1);
 
-            yield return Helper.WaitUntilMoveDone(ShadowsParent);
-            yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]);
-            yield return Helper.WaitUntilFadeDone(_glasses[_lastBorder]);
-            yield return Helper.WaitUntilChangerDone<CameraChanger>(CameraChanger.gameObject);
+            yield return Helper.WaitUntilChangerDone(ShadowsParent);
+//            yield return Helper.WaitUntilFadeDone(_shadows[_lastBorder]);
+//            yield return Helper.WaitUntilFadeDone(_glasses[_lastBorder]);
+            yield return Helper.WaitUntilChangerDone(CameraChanger.gameObject);
 
             if (_maxLevel % ((_maxBoysCount + 1) * 2) == 0)
             {
@@ -166,13 +162,18 @@ public class PlayManager : MonoBehaviour
             else
             {
                 _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, 0.5F));
-                yield return Helper.WaitUntilMoveDone(_glasses[_lastBorder]);
+                yield return Helper.WaitUntilChangerDone(_glasses[_lastBorder]);
 
                 yield return new WaitForSeconds(0.1F);
 
                 _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, -0.5F));
-                yield return Helper.WaitUntilMoveDone(_glasses[_lastBorder]);
+                yield return Helper.WaitUntilChangerDone(_glasses[_lastBorder]);
             }
+        }
+
+        if (_maxBoysCount == 5)
+        {
+            Debug.Log("DONE");
         }
 
         StartCoroutine(FingersSetting());
@@ -256,7 +257,7 @@ public class PlayManager : MonoBehaviour
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetTarget(target);
 
-        yield return Helper.WaitUntilFadeDone(_fingers[0]);
+        yield return Helper.WaitUntilChangerDone(_fingers[0]);
     }
 
     private IEnumerator JumpBoys(int jumpCount)
@@ -276,7 +277,7 @@ public class PlayManager : MonoBehaviour
     private IEnumerator Win()
     {
         for (var i = 0; i < _maxBoysCount; i++)
-            yield return Helper.WaitUntilMoveDone(_clickedGlasses[i]);
+            yield return Helper.WaitUntilChangerDone(_clickedGlasses[i]);
 
         yield return JumpBoys(_maxBoysCount);
 
@@ -290,7 +291,7 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator Lose()
     {
-        yield return Helper.WaitUntilMoveDone(_clickedGlasses[_clickedBoysCount]);
+        yield return Helper.WaitUntilChangerDone(_clickedGlasses[_clickedBoysCount]);
 
         yield return new WaitForSeconds(1);
 

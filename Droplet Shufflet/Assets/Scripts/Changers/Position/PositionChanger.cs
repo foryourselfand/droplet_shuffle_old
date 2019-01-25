@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(_PositionBehavior))]
-public class PositionChanger : Changer
+public class PositionChanger : _Changer
 {
     private Transform _transform;
     private _PositionBehavior _behavior;

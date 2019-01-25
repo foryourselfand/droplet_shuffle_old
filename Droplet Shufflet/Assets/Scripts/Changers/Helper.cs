@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
 
 public class Helper
 {
@@ -32,10 +31,10 @@ public class Helper
     public static void SetStartOpacityToBounds(ref GameObject[] gameObjects, int leftBound, int rightBound)
     {
         for (var i = 0; i < leftBound; i++)
-            gameObjects[i].GetComponent<OpacityChanger>().SetCurrent(0);
+            gameObjects[i].SetActive(false);
 
         for (var i = rightBound + 1; i < gameObjects.Length; i++)
-            gameObjects[i].GetComponent<OpacityChanger>().SetCurrent(0);
+            gameObjects[i].SetActive(false);
     }
 
     public static bool BoyIn(GameObject glass)
@@ -67,7 +66,7 @@ public class Helper
         for (var i = leftBorder; i < rightBorder; i++)
             glasses[i].GetComponent<PositionChanger>().SetTarget(new Vector2(0, y));
 
-        yield return WaitUntilMoveDone(glasses[leftBorder]);
+        yield return WaitUntilChangerDone(glasses[leftBorder]);
     }
 
     public static IEnumerator MoveShadows(GameObject[] shadows, int firstShadow, int distance,
@@ -81,21 +80,11 @@ public class Helper
             .SetTarget(new Vector2(distance * -0.5F, -multiply * 0.5F - multiply * (distance - 1) * 0.1F),
                 (distance - 1) / 2F);
 
-        yield return WaitUntilMoveDone(shadows[firstShadow]);
+        yield return WaitUntilChangerDone(shadows[firstShadow]);
     }
 
-    public static IEnumerator WaitUntilChangerDone<T>(GameObject objectToWait)
+    public static IEnumerator WaitUntilChangerDone(GameObject objectToWait)
     {
-        yield return new WaitUntil(() => (objectToWait.GetComponent<T>() as Changer).IsDone());
-    }
-
-    public static IEnumerator WaitUntilMoveDone(GameObject objectToWait)
-    {
-        yield return WaitUntilChangerDone<PositionChanger>(objectToWait);
-    }
-
-    public static IEnumerator WaitUntilFadeDone(GameObject objectToWait)
-    {
-        yield return WaitUntilChangerDone<OpacityChanger>(objectToWait);
+        yield return new WaitUntil(() => objectToWait.GetComponent<_Changer>().IsDone());
     }
 }

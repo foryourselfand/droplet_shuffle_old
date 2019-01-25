@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraChanger : Changer
+public class CameraChanger : _Changer
 {
     private Camera _camera;
     private float _target;

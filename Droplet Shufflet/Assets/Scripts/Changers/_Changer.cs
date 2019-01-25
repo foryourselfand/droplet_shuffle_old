@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Changer : MonoBehaviour
+public abstract class _Changer : MonoBehaviour
 {
     public float Speed;
 

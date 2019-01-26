@@ -18,8 +18,7 @@ public class PlayManager : MonoBehaviour
 
     private GameObject[] _shadows;
     private GameObject[] _glasses;
-    private List<GameObject> _allBoys;
-    private List<GameObject> _currentBoys;
+    private List<GameObject> _boys;
     private GameObject[] _fingers;
     private GameObject[] _clickedGlasses;
     private List<GameObject> _winGlasses;
@@ -50,11 +49,10 @@ public class PlayManager : MonoBehaviour
         Helper.SaveFromParentToArray(ShadowsParent, ref _shadows);
         Helper.SaveFromParentToArray(GlassesParent, ref _glasses);
         Helper.SaveFromParentToArray(FingersParent, ref _fingers);
-        Helper.SaveFromParentToList(BoysParent, ref _allBoys);
-        _currentBoys = new List<GameObject>();
+        Helper.SaveFromParentToList(BoysParent, ref _boys);
 
         _maxBoysCount = 2;
-        _clickedGlasses = new GameObject[_allBoys.Count];
+        _clickedGlasses = new GameObject[_boys.Count];
     }
 
     private void Start()
@@ -69,25 +67,27 @@ public class PlayManager : MonoBehaviour
     {
         CameraChanger.GetComponent<CameraChanger>().SetCurrent(_maxBoysCount + 1);
 
-        foreach (var boy in _allBoys)
+        foreach (var boy in _boys)
             boy.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
 
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
 
+        foreach (var boy in _boys)
+            boy.SetActive(false);
+        
         for (var i = 0; i < _maxBoysCount; i++)
         {
-            var currentBoyNumber = Random.Range(0, _allBoys.Count);
+            var currentBoyNumber = Random.Range(0, _boys.Count);
 
-            GameObject freshBoy;
-            Helper.SaveRemoveFromAndAddTo(out freshBoy, ref _allBoys, ref _currentBoys, currentBoyNumber);
-
+            var freshBoy = _boys[currentBoyNumber];
             while (true)
             {
                 var currentShadowIndex = Random.Range(_leftBorder, _rightBorder + 1);
 
                 if (_shadows[currentShadowIndex].transform.childCount != 1) continue;
                 Helper.SetParentAndY(freshBoy, _shadows[currentShadowIndex], 0.12F);
+                freshBoy.SetActive(true);
 
                 break;
             }
@@ -107,8 +107,7 @@ public class PlayManager : MonoBehaviour
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetCurrent(0);
 
-        foreach (var boy in _allBoys)
-            boy.SetActive(false);
+
 
         Helper.StartDeactivationInBounds(ref _shadows, _leftBorder, _rightBorder);
     }
@@ -160,13 +159,12 @@ public class PlayManager : MonoBehaviour
                 _maxBoysCount++;
                 _maxLevel = 1;
 
-                var currentBoyNumber = Random.Range(0, _allBoys.Count);
+                var currentBoyNumber = Random.Range(0, _boys.Count);
 
-                GameObject freshBoy;
-                Helper.SaveRemoveFromAndAddTo(out freshBoy, ref _allBoys, ref _currentBoys, currentBoyNumber);
+                var freshBoy = _boys[currentBoyNumber];
 
-                freshBoy.SetActive(true);
                 Helper.SetParentAndY(freshBoy, _shadows[_lastBorder], 0.12F);
+                freshBoy.SetActive(true);
 
                 yield return MoveGlassesAndJump(_maxBoysCount);
             }
@@ -274,7 +272,7 @@ public class PlayManager : MonoBehaviour
         var active = true;
         for (var i = 0; i < jumpCount * 2; i++)
         {
-            foreach (var boy in _currentBoys)
+            foreach (var boy in _boys)
             {
                 boy.transform.localPosition += new Vector3(0, directory, 0);
                 boy.transform.GetChild(0).GetChild(0).gameObject.SetActive(active);

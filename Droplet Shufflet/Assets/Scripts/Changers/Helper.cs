@@ -45,7 +45,7 @@ public class Helper
 
         return false;
     }
-    
+
     public static bool BoyOut(GameObject glass)
     {
         foreach (Transform child in glass.transform.parent)
@@ -60,14 +60,6 @@ public class Helper
         var temp = first;
         first = second;
         second = temp;
-    }
-
-    public static void SaveRemoveFromAndAddTo(out GameObject temp, ref List<GameObject> from, ref List<GameObject> to,
-        int index)
-    {
-        temp = from[index];
-        to.Add(temp);
-        from.RemoveAt(index);
     }
 
     public static IEnumerator MoveGlasses(GameObject[] glasses, float y, int leftBorder, int rightBorder)

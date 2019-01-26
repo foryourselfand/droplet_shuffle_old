@@ -78,7 +78,7 @@ public class PlayManager : MonoBehaviour
 
         for (var i = 0; i < _maxBoysCount; i++)
         {
-            var freshBoy = Helper.GetDeactiveBoyFrom(_boys);
+            var freshBoy = Helper.GetDeActiveBoyFrom(_boys);
 
             while (true)
             {
@@ -114,7 +114,7 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator ShowWhereToMemento()
     {
-        yield return MoveGlassesAndJump(1);
+        yield return MoveGlassesAndJump(_winGlasses, 1);
 
         StartCoroutine(CheckLevel());
     }
@@ -140,7 +140,7 @@ public class PlayManager : MonoBehaviour
             byX *= condition ? -1 : 1;
             ShadowsParent.GetComponent<PositionChanger>().SetTarget(new Vector3(byX, 0));
 
-            CameraChanger.GetComponent<CameraChanger>().SetTarget(1);
+            CameraChanger.GetComponent<CameraChanger>().AddToTarget(1);
 
             yield return Helper.WaitUntilChangerDone(ShadowsParent);
             yield return Helper.WaitUntilChangerDone(CameraChanger);
@@ -150,26 +150,20 @@ public class PlayManager : MonoBehaviour
                 _maxBoysCount++;
                 _maxLevel = 1;
 
-
                 _loseGlasses.Remove(_glasses[_lastBorder]);
                 _winGlasses.Add(_glasses[_lastBorder]);
 
-                var freshBoy = Helper.GetDeactiveBoyFrom(_boys);
+                var freshBoy = Helper.GetDeActiveBoyFrom(_boys);
                 Helper.SetParentAndY(freshBoy, _shadows[_lastBorder], 0.12F);
                 freshBoy.SetActive(true);
-                
-                yield return MoveGlassesAndJump(_maxBoysCount);
+
+                yield return MoveGlassesAndJump(_winGlasses, _maxBoysCount);
             }
             else
             {
-                var emptyGlass = _glasses[_lastBorder];
-                emptyGlass.GetComponent<PositionChanger>().SetTarget(new Vector3(0, 0.5F));
-                yield return Helper.WaitUntilChangerDone(emptyGlass);
-
-                yield return new WaitForSeconds(0.1F);
-
-                emptyGlass.GetComponent<PositionChanger>().SetTarget(new Vector3(0, -0.5F));
-                yield return Helper.WaitUntilChangerDone(emptyGlass);
+                yield return MoveGlassesAndJump(_loseGlasses, _maxBoysCount,
+                    _loseGlasses.FindIndex(a => a == _glasses[_lastBorder])
+                );
             }
         }
 
@@ -227,13 +221,18 @@ public class PlayManager : MonoBehaviour
             StartCoroutine(FingersSetting());
     }
 
-    private IEnumerator MoveGlassesAndJump(int jumpCount)
+    private IEnumerator MoveGlassesAndJump(List<GameObject> glasses, int jumpCount, int index)
     {
-        yield return Helper.MoveGlasses(_glasses, 0.5F, _leftBorder, _rightBorder + 1);
-
+        yield return Helper.MoveGlasses(glasses, index, 0.5F);
+        
         yield return JumpBoys(jumpCount);
 
-        yield return Helper.MoveGlasses(_glasses, -0.5F, _leftBorder, _rightBorder + 1);
+        yield return Helper.MoveGlasses(glasses, index, -0.5F);
+    }
+
+    private IEnumerator MoveGlassesAndJump(List<GameObject> glasses, int jumpCount)
+    {
+        yield return MoveGlassesAndJump(glasses, jumpCount, 0);
     }
 
     private void ChangeScaleOnFingers()
@@ -283,7 +282,7 @@ public class PlayManager : MonoBehaviour
 
         yield return JumpBoys(_maxBoysCount);
 
-        yield return Helper.MoveGlasses(_clickedGlasses, -0.5F, 0, _maxBoysCount);
+        yield return Helper.MoveGlasses(_winGlasses, 0, -0.5F);
 
         _clickedBoysCount = 0;
         _maxLevel++;
@@ -299,22 +298,20 @@ public class PlayManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5F);
 
-//        loseGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, -0.5F));
-//
-//        var rightGlasses = _glasses.Where(Helper.BoyIn).ToList();
-//
-//        foreach (var rightGlass in rightGlasses)
-//            if (rightGlass.transform.localPosition.y == 0.3F)
-//                rightGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, 0.5F));
-//        foreach (var rightGlass in rightGlasses)
-//            yield return Helper.WaitUntilChangerDone(rightGlass);
-//
-//        yield return new WaitForSeconds(0.5F);
-//
-//        foreach (var rightGlass in rightGlasses)
-//            rightGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, -0.5F));
-//        foreach (var rightGlass in rightGlasses)
-//            yield return Helper.WaitUntilChangerDone(rightGlass);
+        loseGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, -0.5F));
+
+        foreach (var winGlass in _winGlasses)
+            if (winGlass.transform.localPosition.y == 0.3F)
+                winGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, 0.5F));
+        foreach (var rightGlass in _winGlasses)
+            yield return Helper.WaitUntilChangerDone(rightGlass);
+
+        yield return new WaitForSeconds(0.5F);
+
+        foreach (var rightGlass in _winGlasses)
+            rightGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, -0.5F));
+        foreach (var rightGlass in _winGlasses)
+            yield return Helper.WaitUntilChangerDone(rightGlass);
 
         //TODO: Fade Out And Game Over
         Debug.Log("Game Over");

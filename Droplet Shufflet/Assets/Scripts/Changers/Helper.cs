@@ -28,7 +28,7 @@ public class Helper
         child.transform.localPosition = new Vector2(0, y);
     }
 
-    public static GameObject GetDeactiveBoyFrom(List<GameObject> boys)
+    public static GameObject GetDeActiveBoyFrom(List<GameObject> boys)
     {
         foreach (var boy in boys)
         {
@@ -64,12 +64,12 @@ public class Helper
         second = temp;
     }
 
-    public static IEnumerator MoveGlasses(GameObject[] glasses, float y, int leftBorder, int rightBorder)
+    public static IEnumerator MoveGlasses(List<GameObject> glasses, int index, float y)
     {
-        for (var i = leftBorder; i < rightBorder; i++)
-            glasses[i].GetComponent<PositionChanger>().SetTarget(new Vector2(0, y));
+        foreach (var glass in glasses)
+            glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, y));
 
-        yield return WaitUntilChangerDone(glasses[leftBorder]);
+        yield return WaitUntilChangerDone(glasses[index]);
     }
 
     public static IEnumerator MoveShadows(GameObject[] shadows, int firstShadow, int distance,

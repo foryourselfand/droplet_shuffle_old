@@ -28,13 +28,15 @@ public class Helper
         child.transform.localPosition = new Vector2(0, y);
     }
 
-    public static void StartDeactivationInBounds(ref GameObject[] gameObjects, int leftBound, int rightBound)
+    public static GameObject GetDeactiveBoyFrom(List<GameObject> boys)
     {
-        for (var i = 0; i < leftBound; i++)
-            gameObjects[i].SetActive(false);
+        foreach (var boy in boys)
+        {
+            if (boy.activeSelf) continue;
+            return boy;
+        }
 
-        for (var i = rightBound + 1; i < gameObjects.Length; i++)
-            gameObjects[i].SetActive(false);
+        return null;
     }
 
     public static bool BoyIn(GameObject glass)

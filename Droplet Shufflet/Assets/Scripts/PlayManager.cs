@@ -75,12 +75,11 @@ public class PlayManager : MonoBehaviour
 
         foreach (var boy in _boys)
             boy.SetActive(false);
-        
+
         for (var i = 0; i < _maxBoysCount; i++)
         {
-            var currentBoyNumber = Random.Range(0, _boys.Count);
+            var freshBoy = Helper.GetDeactiveBoyFrom(_boys);
 
-            var freshBoy = _boys[currentBoyNumber];
             while (true)
             {
                 var currentShadowIndex = Random.Range(_leftBorder, _rightBorder + 1);
@@ -96,20 +95,14 @@ public class PlayManager : MonoBehaviour
         _winGlasses = _glasses.Where(Helper.BoyIn).ToList();
         _loseGlasses = _glasses.Where(Helper.BoyOut).ToList();
 
-//        foreach (var tempGlass in _winGlasses)
-//            Debug.Log(tempGlass.name);
-//        
-//        Debug.Log("SPACE");
-//        
-//        foreach (var tempGlass in _loseGlasses)
-//            Debug.Log(tempGlass.name);
-
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetCurrent(0);
 
+        foreach (var shadow in _shadows)
+            shadow.SetActive(false);
 
-
-        Helper.StartDeactivationInBounds(ref _shadows, _leftBorder, _rightBorder);
+        for (var i = _leftBorder; i < _rightBorder + 1; i++)
+            _shadows[i].SetActive(true);
     }
 
     private void ActionAfterShadowDone()
@@ -142,8 +135,6 @@ public class PlayManager : MonoBehaviour
             _lastBorder = condition ? ++_rightBorder : --_leftBorder;
 
             _shadows[_lastBorder].SetActive(true);
-            _glasses[_lastBorder].SetActive(true);
-
 
             var byX = 0.5F;
             byX *= condition ? -1 : 1;
@@ -159,19 +150,19 @@ public class PlayManager : MonoBehaviour
                 _maxBoysCount++;
                 _maxLevel = 1;
 
-                var currentBoyNumber = Random.Range(0, _boys.Count);
 
-                var freshBoy = _boys[currentBoyNumber];
+                _loseGlasses.Remove(_glasses[_lastBorder]);
+                _winGlasses.Add(_glasses[_lastBorder]);
 
+                var freshBoy = Helper.GetDeactiveBoyFrom(_boys);
                 Helper.SetParentAndY(freshBoy, _shadows[_lastBorder], 0.12F);
                 freshBoy.SetActive(true);
-
+                
                 yield return MoveGlassesAndJump(_maxBoysCount);
             }
             else
             {
                 var emptyGlass = _glasses[_lastBorder];
-                _loseGlasses.Add(emptyGlass);
                 emptyGlass.GetComponent<PositionChanger>().SetTarget(new Vector3(0, 0.5F));
                 yield return Helper.WaitUntilChangerDone(emptyGlass);
 

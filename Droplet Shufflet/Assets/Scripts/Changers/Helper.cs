@@ -28,7 +28,7 @@ public class Helper
         child.transform.localPosition = new Vector2(0, y);
     }
 
-    public static void SetStartOpacityToBounds(ref GameObject[] gameObjects, int leftBound, int rightBound)
+    public static void StartDeactivationInBounds(ref GameObject[] gameObjects, int leftBound, int rightBound)
     {
         for (var i = 0; i < leftBound; i++)
             gameObjects[i].SetActive(false);
@@ -44,6 +44,15 @@ public class Helper
                 return true;
 
         return false;
+    }
+    
+    public static bool BoyOut(GameObject glass)
+    {
+        foreach (Transform child in glass.transform.parent)
+            if (child.CompareTag("Boy"))
+                return false;
+
+        return true;
     }
 
     public static void Swap(ref GameObject first, ref GameObject second)

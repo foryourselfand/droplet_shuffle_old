@@ -35,7 +35,7 @@ public class PlayManager : MonoBehaviour
     private int _maxBoysCount;
     private int _currentLevel;
     private int _maxLevel = 1;
-    private int _leftBorder = 3, _rightBorder = 5;
+    private int _leftBorder = 2, _rightBorder = 4;
     private bool _canClick;
     private int _lastBorder = -1;
 
@@ -67,29 +67,8 @@ public class PlayManager : MonoBehaviour
     {
         CameraChanger.GetComponent<CameraChanger>().SetCurrent(_maxBoysCount + 1);
 
-        var colors = new List<Color>();
         foreach (var boy in _allBoys)
-            colors.Add(boy.transform.GetChild(0).GetComponent<SpriteRenderer>().color);
-
-        foreach (var boy in _allBoys)
-        {
-            var child = boy.transform.GetChild(0);
-            var fillerColor = child.GetComponent<SpriteRenderer>().color;
-            var grandChild = child.transform.GetChild(0).gameObject;
-            while (true)
-            {
-                var tempColor = colors[Random.Range(0, colors.Count)];
-
-                if (fillerColor == tempColor) continue;
-                grandChild.GetComponent<SpriteRenderer>().color = tempColor;
-
-                colors.Remove(tempColor);
-
-                grandChild.SetActive(false);
-
-                break;
-            }
-        }
+            boy.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
 
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
@@ -138,9 +117,9 @@ public class PlayManager : MonoBehaviour
     }
 
     private IEnumerator CheckLevel()
-
     {
-        if (_maxLevel % (_maxBoysCount + 1) == 0 && _maxBoysCount != 5)
+        var checker = _maxLevel - 1;
+        if (checker != 0 && checker % _maxBoysCount == 0 && _maxBoysCount != 4)
         {
             _maxDistance++;
 
@@ -165,7 +144,7 @@ public class PlayManager : MonoBehaviour
             yield return Helper.WaitUntilChangerDone(ShadowsParent);
             yield return Helper.WaitUntilChangerDone(CameraChanger);
 
-            if (_maxLevel % ((_maxBoysCount + 1) * 2) == 0)
+            if (checker % (_maxBoysCount * 2) == 0)
             {
                 _maxBoysCount++;
                 _maxLevel = 1;
@@ -182,17 +161,18 @@ public class PlayManager : MonoBehaviour
             }
             else
             {
-                _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, 0.5F));
-                yield return Helper.WaitUntilChangerDone(_glasses[_lastBorder]);
+                var emptyGlass = _glasses[_lastBorder];
+                emptyGlass.GetComponent<PositionChanger>().SetTarget(new Vector3(0, 0.5F));
+                yield return Helper.WaitUntilChangerDone(emptyGlass);
 
                 yield return new WaitForSeconds(0.1F);
 
-                _glasses[_lastBorder].GetComponent<PositionChanger>().SetTarget(new Vector3(0, -0.5F));
-                yield return Helper.WaitUntilChangerDone(_glasses[_lastBorder]);
+                emptyGlass.GetComponent<PositionChanger>().SetTarget(new Vector3(0, -0.5F));
+                yield return Helper.WaitUntilChangerDone(emptyGlass);
             }
         }
 
-        if (_maxBoysCount == 5)
+        if (_maxBoysCount == 4)
         {
             Debug.Log("DONE");
         }
@@ -284,7 +264,7 @@ public class PlayManager : MonoBehaviour
     private IEnumerator JumpBoys(int jumpCount)
     {
         var directory = 0.1F;
-        bool active = true;
+        var active = true;
         for (var i = 0; i < jumpCount * 2; i++)
         {
             foreach (var boy in _currentBoys)
@@ -293,9 +273,8 @@ public class PlayManager : MonoBehaviour
                 boy.transform.GetChild(0).GetChild(0).gameObject.SetActive(active);
             }
 
-            active = !active;
-
             directory *= -1;
+            active = !active;
 
             yield return new WaitForSeconds(1F / jumpCount);
         }

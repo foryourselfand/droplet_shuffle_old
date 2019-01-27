@@ -93,7 +93,15 @@ public class PlayManager : MonoBehaviour
         }
 
         _winGlasses = _glasses.Where(Helper.BoyIn).ToList();
-        _loseGlasses = _glasses.Where(Helper.BoyOut).ToList();
+        _loseGlasses = new List<GameObject>();
+
+        for (var i = _leftBorder; i < _rightBorder + 1; i++)
+        {
+            if (Helper.BoyOut(_glasses[i]))
+            {
+                _loseGlasses.Add(_glasses[i]);
+            }
+        }
 
         foreach (var finger in _fingers)
             finger.GetComponent<OpacityChanger>().SetCurrent(0);
@@ -150,7 +158,6 @@ public class PlayManager : MonoBehaviour
                 _maxBoysCount++;
                 _maxLevel = 1;
 
-                _loseGlasses.Remove(_glasses[_lastBorder]);
                 _winGlasses.Add(_glasses[_lastBorder]);
 
                 var freshBoy = Helper.GetDeActiveBoyFrom(_boys);
@@ -161,9 +168,8 @@ public class PlayManager : MonoBehaviour
             }
             else
             {
-                yield return MoveGlassesAndJump(_loseGlasses, _maxBoysCount,
-                    _loseGlasses.FindIndex(a => a == _glasses[_lastBorder])
-                );
+                _loseGlasses.Add(_glasses[_lastBorder]);
+                yield return MoveGlassesAndJump(_loseGlasses, _maxBoysCount);
             }
         }
 
@@ -221,18 +227,13 @@ public class PlayManager : MonoBehaviour
             StartCoroutine(FingersSetting());
     }
 
-    private IEnumerator MoveGlassesAndJump(List<GameObject> glasses, int jumpCount, int index)
-    {
-        yield return Helper.MoveGlasses(glasses, index, 0.5F);
-        
-        yield return JumpBoys(jumpCount);
-
-        yield return Helper.MoveGlasses(glasses, index, -0.5F);
-    }
-
     private IEnumerator MoveGlassesAndJump(List<GameObject> glasses, int jumpCount)
     {
-        yield return MoveGlassesAndJump(glasses, jumpCount, 0);
+        yield return Helper.MoveGlasses(glasses, 0.5F);
+
+        yield return JumpBoys(jumpCount);
+
+        yield return Helper.MoveGlasses(glasses, -0.5F);
     }
 
     private void ChangeScaleOnFingers()
@@ -282,7 +283,7 @@ public class PlayManager : MonoBehaviour
 
         yield return JumpBoys(_maxBoysCount);
 
-        yield return Helper.MoveGlasses(_winGlasses, 0, -0.5F);
+        yield return Helper.MoveGlasses(_winGlasses, -0.5F);
 
         _clickedBoysCount = 0;
         _maxLevel++;

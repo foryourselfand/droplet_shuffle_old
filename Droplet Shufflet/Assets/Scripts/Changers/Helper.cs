@@ -64,12 +64,12 @@ public class Helper
         second = temp;
     }
 
-    public static IEnumerator MoveGlasses(List<GameObject> glasses, int index, float y)
+    public static IEnumerator MoveGlasses(List<GameObject> glasses, float y)
     {
         foreach (var glass in glasses)
             glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, y));
 
-        yield return WaitUntilChangerDone(glasses[index]);
+        yield return WaitUntilChangerDone(glasses[0]);
     }
 
     public static IEnumerator MoveShadows(GameObject[] shadows, int firstShadow, int distance,

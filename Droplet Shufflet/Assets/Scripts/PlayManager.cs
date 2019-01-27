@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayManager : MonoBehaviour
@@ -18,9 +17,8 @@ public class PlayManager : MonoBehaviour
 
     private GameObject[] _shadows;
     private GameObject[] _glasses;
-    private List<GameObject> _boys;
     private GameObject[] _fingers;
-    private GameObject[] _clickedGlasses;
+    private List<GameObject> _boys;
     private List<GameObject> _winGlasses;
     private List<GameObject> _loseGlasses;
 
@@ -37,10 +35,11 @@ public class PlayManager : MonoBehaviour
     private int _currentLevel;
     private int _maxLevel = 1;
     private int _leftBorder = 2, _rightBorder = 4;
-    private bool _canClick;
     private int _lastBorder = -1;
 
     #endregion
+
+    private bool _canClick;
 
     public GameObject CameraChanger;
 
@@ -52,7 +51,6 @@ public class PlayManager : MonoBehaviour
         Helper.SaveFromParentToList(BoysParent, ref _boys);
 
         _maxBoysCount = 2;
-        _clickedGlasses = new GameObject[_boys.Count];
     }
 
     private void Start()
@@ -65,16 +63,16 @@ public class PlayManager : MonoBehaviour
 
     private void DefineOnStart()
     {
-        CameraChanger.GetComponent<CameraChanger>().SetCurrent(_maxBoysCount + 1);
+        CameraChanger.GetComponent<CameraChanger>().SetCurrent(_rightBorder - _leftBorder + 1);
 
         foreach (var boy in _boys)
+        {
             boy.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            boy.SetActive(false);
+        }
 
         for (var i = 0; i < _glasses.Length; i++)
             Helper.SetParentAndY(_glasses[i], _shadows[i], 0.3F);
-
-        foreach (var boy in _boys)
-            boy.SetActive(false);
 
         for (var i = 0; i < _maxBoysCount; i++)
         {
@@ -92,15 +90,15 @@ public class PlayManager : MonoBehaviour
             }
         }
 
-        _winGlasses = _glasses.Where(Helper.BoyIn).ToList();
+        _winGlasses = new List<GameObject>();
         _loseGlasses = new List<GameObject>();
 
         for (var i = _leftBorder; i < _rightBorder + 1; i++)
         {
-            if (Helper.BoyOut(_glasses[i]))
-            {
+            if (Helper.BoyIn(_glasses[i]))
+                _winGlasses.Add(_glasses[i]);
+            else
                 _loseGlasses.Add(_glasses[i]);
-            }
         }
 
         foreach (var finger in _fingers)
@@ -129,8 +127,8 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator CheckLevel()
     {
-        var checker = _maxLevel - 1;
-        if (checker != 0 && checker % _maxBoysCount == 0 && _maxBoysCount != 4)
+        var levelCountChecker = _maxLevel - 1;
+        if (levelCountChecker != 0 && levelCountChecker % _maxBoysCount == 0 && _maxBoysCount != 4)
         {
             _maxDistance++;
 
@@ -153,7 +151,7 @@ public class PlayManager : MonoBehaviour
             yield return Helper.WaitUntilChangerDone(ShadowsParent);
             yield return Helper.WaitUntilChangerDone(CameraChanger);
 
-            if (checker % (_maxBoysCount * 2) == 0)
+            if (levelCountChecker % (_maxBoysCount * 2) == 0)
             {
                 _maxBoysCount++;
                 _maxLevel = 1;
@@ -169,7 +167,7 @@ public class PlayManager : MonoBehaviour
             else
             {
                 _loseGlasses.Add(_glasses[_lastBorder]);
-                yield return MoveGlassesAndJump(_loseGlasses, _maxBoysCount);
+                yield return MoveGlassesAndJump(_loseGlasses, 1);
             }
         }
 
@@ -272,14 +270,14 @@ public class PlayManager : MonoBehaviour
             directory *= -1;
             active = !active;
 
-            yield return new WaitForSeconds(1F / jumpCount);
+            yield return new WaitForSeconds(0.5F / jumpCount);
         }
     }
 
     private IEnumerator Win()
     {
-        for (var i = 0; i < _maxBoysCount; i++)
-            yield return Helper.WaitUntilChangerDone(_clickedGlasses[i]);
+        foreach (var glass in _winGlasses)
+            yield return Helper.WaitUntilChangerDone(glass);
 
         yield return JumpBoys(_maxBoysCount);
 
@@ -291,15 +289,13 @@ public class PlayManager : MonoBehaviour
         StartCoroutine(CheckLevel());
     }
 
-    private IEnumerator Lose()
+    private IEnumerator Lose(GameObject lostGlass)
     {
-        var loseGlass = _clickedGlasses[_clickedBoysCount];
-
-        yield return Helper.WaitUntilChangerDone(loseGlass);
+        yield return Helper.WaitUntilChangerDone(lostGlass);
 
         yield return new WaitForSeconds(0.5F);
 
-        loseGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, -0.5F));
+        lostGlass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, -0.5F));
 
         foreach (var winGlass in _winGlasses)
             if (winGlass.transform.localPosition.y == 0.3F)
@@ -322,20 +318,19 @@ public class PlayManager : MonoBehaviour
     {
         if (!_canClick || glass.transform.localPosition.y != 0.3F) return;
 
-        _clickedGlasses[_clickedBoysCount] = glass;
         glass.GetComponent<PositionChanger>().SetTarget(new Vector2(0, 0.5F));
 
-        IEnumerator coroutineToStart = null;
+        IEnumerator actionToStart = null;
         if (Helper.BoyIn(glass))
         {
             if (++_clickedBoysCount == _maxBoysCount)
-                coroutineToStart = Win();
+                actionToStart = Win();
         }
         else
-            coroutineToStart = Lose();
+            actionToStart = Lose(glass);
 
-        if (coroutineToStart == null) return;
+        if (actionToStart == null) return;
         _canClick = false;
-        StartCoroutine(coroutineToStart);
+        StartCoroutine(actionToStart);
     }
 }

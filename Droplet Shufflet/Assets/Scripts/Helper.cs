@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Helper
+public static class Helper
 {
     public static void SaveFromParentToArray(GameObject parent, ref GameObject[] objectsArray)
     {
@@ -46,15 +46,6 @@ public class Helper
                 return true;
 
         return false;
-    }
-
-    public static bool BoyOut(GameObject glass)
-    {
-        foreach (Transform child in glass.transform.parent)
-            if (child.CompareTag("Boy"))
-                return false;
-
-        return true;
     }
 
     public static void Swap(ref GameObject first, ref GameObject second)

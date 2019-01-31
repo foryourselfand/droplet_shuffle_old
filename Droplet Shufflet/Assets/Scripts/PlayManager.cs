@@ -43,6 +43,8 @@ public class PlayManager : MonoBehaviour
 
     public GameObject CameraChanger;
 
+    public GameObject BlackFade;
+
     private void Awake()
     {
         Helper.SaveFromParentToArray(ShadowsParent, ref _shadows);
@@ -56,6 +58,9 @@ public class PlayManager : MonoBehaviour
     private void Start()
     {
         DefineOnStart();
+
+        BlackFade.SetActive(true);
+        BlackFade.GetComponent<OpacityChanger>().SetCurrentAndTarget(1, 0);
 
         //TODO: Wait Until Shadow Done
         ActionAfterShadowDone();

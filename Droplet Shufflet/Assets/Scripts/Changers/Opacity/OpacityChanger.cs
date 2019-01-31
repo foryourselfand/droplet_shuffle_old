@@ -1,50 +1,57 @@
 using UnityEngine;
 
-public class OpacityChanger : _Changer
+public abstract class OpacityChanger : _Changer
 {
-    private SpriteRenderer _spriteRenderer;
+    private float _current;
     private float _target;
 
-    protected override void DefineChangingComponent()
+    public float Opacity
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        private get { return _current; }
+        set
+        {
+            _current = value;
+            SetOpacityRef(value);
+        }
     }
+
+    protected abstract void SetOpacityRef(float current);
+
+    #region CHANGER
+
+    protected abstract override void DefineChangingComponent();
 
     protected override bool CheckForCondition()
     {
-        return Mathf.Abs(_spriteRenderer.color.a - _target) > 0.01F;
+        return Mathf.Abs(Opacity - _target) > 0.01F;
     }
 
     protected override void Change(float t)
     {
-        var tmp = _spriteRenderer.color;
-        tmp.a = Mathf.MoveTowards(tmp.a, _target, t * Speed);
-        _spriteRenderer.color = tmp;
+        Opacity = Mathf.MoveTowards(Opacity, _target, t * Speed);
     }
 
     protected override void ActionOnEnd()
     {
-        var tmp = _spriteRenderer.color;
-        tmp.a = _target;
-        _spriteRenderer.color = tmp;
+        Opacity = _target;
+    }
+
+    #endregion
+
+    public void SetCurrent(float current)
+    {
+        Opacity = current;
     }
 
     public void SetTarget(float target)
     {
-        StartChanging();
         _target = target;
-    }
-
-    public void SetCurrent(float current)
-    {
-        var tmp = _spriteRenderer.color;
-        tmp.a = current;
-        _spriteRenderer.color = tmp;
+        StartChanging();
     }
 
     public void SetCurrentAndTarget(float current, float target)
     {
-        SetCurrent(target);
+        SetCurrent(current);
         SetTarget(target);
     }
 }

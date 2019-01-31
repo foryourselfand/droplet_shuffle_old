@@ -27,8 +27,8 @@ public class CameraChanger : _Changer
 
     public void AddToTarget(float increasing)
     {
-        StartChanging();
         _target = _camera.orthographicSize + increasing;
+        StartChanging();
     }
 
     public void SetCurrent(float current)

@@ -9,7 +9,9 @@
             <e p="_Changer.cs" t="Include" />
             <e p="CameraChanger.cs" t="Include" />
             <e p="Opacity" t="Include">
+              <e p="CanvasOpacity.cs" t="Include" />
               <e p="OpacityChanger.cs" t="Include" />
+              <e p="SpriteOpacity.cs" t="Include" />
             </e>
             <e p="Position" t="Include">
               <e p="Behaviors" t="Include">

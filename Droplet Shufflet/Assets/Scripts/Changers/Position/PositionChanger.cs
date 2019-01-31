@@ -38,14 +38,14 @@ public class PositionChanger : _Changer
 
     public void SetTarget(Vector3 target)
     {
-        StartChanging();
         _target = _transform.localPosition + target;
+        StartChanging();
     }
 
     public void SetTarget(Vector3 target, float speedAdd)
     {
-        StartChanging();
         _target = _transform.localPosition + target;
         Speed += speedAdd;
+        StartChanging();
     }
 }

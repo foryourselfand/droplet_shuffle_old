@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayManager : MonoBehaviour
 {
@@ -44,6 +45,20 @@ public class PlayManager : MonoBehaviour
     public GameObject CameraChanger;
 
     public GameObject BlackFade;
+    public GameObject ReadyText;
+    public GameObject ScoreText;
+
+    private int _score;
+
+    private int Score
+    {
+        get { return _score; }
+        set
+        {
+            _score = value;
+            ScoreText.GetComponent<Text>().text = _score.ToString();
+        }
+    }
 
     private void Awake()
     {
@@ -59,15 +74,14 @@ public class PlayManager : MonoBehaviour
     {
         DefineOnStart();
 
-        BlackFade.SetActive(true);
-        BlackFade.GetComponent<OpacityChanger>().SetCurrentAndTarget(1, 0);
-
-        //TODO: Wait Until Shadow Done
-        ActionAfterShadowDone();
+        StartCoroutine(FadeOut());
     }
 
     private void DefineOnStart()
     {
+        BlackFade.SetActive(true);
+        ReadyText.GetComponent<OpacityChanger>().SetCurrent(0);
+        ScoreText.GetComponent<OpacityChanger>().SetCurrent(0);
         CameraChanger.GetComponent<CameraChanger>().SetCurrent(_rightBorder - _leftBorder + 1);
 
         foreach (var boy in _boys)
@@ -116,11 +130,15 @@ public class PlayManager : MonoBehaviour
             _shadows[i].SetActive(true);
     }
 
-    private void ActionAfterShadowDone()
+    private IEnumerator FadeOut()
     {
-        //TODO: Wait Until Shadow Done
+        BlackFade.GetComponent<OpacityChanger>().SetCurrentAndTarget(1, 0);
 
-        StartCoroutine(ShowWhereToMemento());
+        yield return Helper.WaitUntilChangerDone(BlackFade);
+
+        yield return StartCoroutine(ShowWhereToMemento());
+        
+        ScoreText.GetComponent<OpacityChanger>().SetTarget(1);
     }
 
     private IEnumerator ShowWhereToMemento()
@@ -232,11 +250,18 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator MoveGlassesAndJump(List<GameObject> glasses, int jumpCount)
     {
+        ReadyText.GetComponent<PositionChanger>().SetTarget(new Vector2(0, 250));
+        ReadyText.GetComponent<OpacityChanger>().SetTarget(1);
+
         yield return Helper.MoveGlasses(glasses, 0.5F);
 
         yield return JumpBoys(jumpCount);
 
+        ReadyText.GetComponent<PositionChanger>().SetTarget(new Vector2(0, -250));
+        ReadyText.GetComponent<OpacityChanger>().SetTarget(0);
+
         yield return Helper.MoveGlasses(glasses, -0.5F);
+        ReadyText.SetActive(false);
     }
 
     private void ChangeScaleOnFingers()
@@ -281,6 +306,8 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator Win()
     {
+        Score += 10 * _maxBoysCount;
+
         foreach (var glass in _winGlasses)
             yield return Helper.WaitUntilChangerDone(glass);
 
@@ -315,7 +342,10 @@ public class PlayManager : MonoBehaviour
         foreach (var rightGlass in _winGlasses)
             yield return Helper.WaitUntilChangerDone(rightGlass);
 
-        //TODO: Fade Out And Game Over
+
+        BlackFade.GetComponent<OpacityChanger>().SetCurrentAndTarget(0, 1);
+        yield return Helper.WaitUntilChangerDone(BlackFade);
+
         Debug.Log("Game Over");
     }
 
